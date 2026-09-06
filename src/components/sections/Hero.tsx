@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Sparkles, ArrowRight, Layers } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { ServiceCategory } from '../../data/services';
 
 interface HeroProps {
@@ -175,15 +175,6 @@ export const Hero: React.FC<HeroProps> = ({
               </motion.div>
             </AnimatePresence>
 
-            {/* Desktop Hover Hint Pill */}
-            <div
-              onClick={() => handleBannerClick(currentSlide)}
-              className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-20 hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-black/85 backdrop-blur-md border border-[#d4af37]/60 text-xs font-bold text-[#f7e7ce] uppercase tracking-wider shadow-2xl group-hover:bg-[#d4af37] group-hover:text-black transition-all cursor-pointer"
-            >
-              <span>Explore {currentSlide.categoryLabel}</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </div>
-
             {/* Left Chevron Prev Button */}
             <button
               onClick={(e) => {
@@ -218,62 +209,24 @@ export const Hero: React.FC<HeroProps> = ({
           <div className="absolute bottom-0 right-0 w-3 sm:w-5 h-3 sm:h-5 border-b-2 border-r-2 border-[#d4af37] pointer-events-none" />
         </div>
 
-        {/* Slide Indicators & Tap Hint */}
-        <div className="mt-3 sm:mt-4 flex items-center justify-between px-1">
-          {/* Tap Banner Hint */}
-          <div className="flex items-center gap-1.5 text-[10px] sm:text-xs text-[#d4af37] font-medium">
-            <Sparkles className="w-3 h-3 text-[#d4af37]" />
-            <span className="hidden sm:inline">Click banner to explore related services</span>
-            <span className="sm:hidden">Tap banner to view services</span>
-          </div>
-
-          {/* Dots Indicator */}
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            {bannerSlides.map((s, idx) => {
-              const isActive = currentSlideIndex === idx;
-              return (
-                <button
-                  key={s.id}
-                  onClick={() => {
-                    goToSlide(idx);
-                    resetTimer();
-                  }}
-                  aria-label={`Go to banner ${idx + 1}`}
-                  className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                    isActive
-                      ? 'w-6 sm:w-8 bg-gradient-to-r from-[#d4af37] to-[#f3e5ab] shadow-md shadow-[#d4af37]/40'
-                      : 'w-1.5 sm:w-2 bg-[#2a2824] hover:bg-[#4a473f]'
-                  }`}
-                />
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Quick Category Shortcut Pills */}
-        <div className="mt-3.5 sm:mt-5 flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
-          <div className="flex items-center gap-1 text-[10px] uppercase font-bold tracking-widest text-[#8e8c85] pl-1 flex-shrink-0 hidden md:flex">
-            <Layers className="w-3 h-3 text-[#d4af37]" />
-            <span>Quick Jump:</span>
-          </div>
-          {bannerSlides.map((slide, idx) => {
-            const isSlideActive = currentSlideIndex === idx;
+        {/* Centered Slide Dots Indicator */}
+        <div className="mt-3 sm:mt-4 flex items-center justify-center gap-1.5 sm:gap-2">
+          {bannerSlides.map((s, idx) => {
+            const isActive = currentSlideIndex === idx;
             return (
               <button
-                key={slide.id}
+                key={s.id}
                 onClick={() => {
                   goToSlide(idx);
-                  handleBannerClick(slide);
+                  resetTimer();
                 }}
-                className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-semibold tracking-wider uppercase whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer flex-shrink-0 border ${
-                  isSlideActive
-                    ? 'bg-[#1e1e28] text-[#f7e7ce] border-[#d4af37] shadow-lg scale-[1.02]'
-                    : 'bg-[#121217] text-[#b0ada5] border-[#26242c] hover:border-[#d4af37]/40 hover:text-white'
+                aria-label={`Go to banner ${idx + 1}`}
+                className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                  isActive
+                    ? 'w-6 sm:w-8 bg-gradient-to-r from-[#d4af37] to-[#f3e5ab] shadow-md shadow-[#d4af37]/40'
+                    : 'w-1.5 sm:w-2 bg-[#2a2824] hover:bg-[#4a473f]'
                 }`}
-              >
-                <span>{slide.quickPill}</span>
-                <ArrowRight className="w-3 h-3 text-[#d4af37]" />
-              </button>
+              />
             );
           })}
         </div>
