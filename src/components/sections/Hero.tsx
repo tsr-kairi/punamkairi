@@ -15,9 +15,6 @@ interface BannerSlide {
   title: string;
   image: string;
   targetCategory: ServiceCategory;
-  categoryLabel: string;
-  quickPill: string;
-  badge: string;
 }
 
 const bannerSlides: BannerSlide[] = [
@@ -25,37 +22,25 @@ const bannerSlides: BannerSlide[] = [
     id: 'banner-bridal',
     title: 'Bridal Makeup - Your Big Day, Our Expertise',
     image: '/assets/images/banners/banner-bridal-makeup.jpg',
-    targetCategory: 'BRIDAL',
-    categoryLabel: 'Bridal Artistry',
-    quickPill: '👰 Bridal Makeup',
-    badge: 'Royal Look • 16-Hr Wear'
+    targetCategory: 'BRIDAL'
   },
   {
     id: 'banner-prewedding',
     title: 'Pre-Wedding Makeup - Look Picture Perfect, Naturally',
     image: '/assets/images/banners/banner-prewedding-makeup.jpg',
-    targetCategory: 'WEDDING_EVENTS',
-    categoryLabel: 'Wedding Ceremonies & Pre-Wedding',
-    quickPill: '📸 Pre-Wedding Look',
-    badge: 'Camera Ready • Natural Glow'
+    targetCategory: 'WEDDING_EVENTS'
   },
   {
     id: 'banner-facial',
     title: 'Professional Facial Care - Healthy Skin | Natural Glow',
     image: '/assets/images/banners/banner-facial-care.jpg',
-    targetCategory: 'FACIALS',
-    categoryLabel: 'Facials & Skin Glow',
-    quickPill: '🌸 Facial Care & Glow',
-    badge: '24K Gold & Anti-Tan'
+    targetCategory: 'FACIALS'
   },
   {
     id: 'banner-party',
     title: 'Party Makeup - Glam For Every Occasion',
     image: '/assets/images/banners/banner-party-makeup.jpg',
-    targetCategory: 'PARTY_OCCASION',
-    categoryLabel: 'Party & Festive Glam',
-    quickPill: '💄 Party Glam',
-    badge: 'High Impact • Zero Flashback'
+    targetCategory: 'PARTY_OCCASION'
   }
 ];
 
