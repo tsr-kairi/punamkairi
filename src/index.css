@@ -1,0 +1,175 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: 'Cinzel', serif;
+    --font-serif: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+    --font-italiana: 'Italiana', serif;
+    --font-calligraphy: 'Alex Brush', cursive;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #0a0a0c;
+    color: #f5f2ea;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0.04em;
+  }
+
+  .font-serif-luxury {
+    font-family: var(--font-serif);
+  }
+
+  .font-italiana {
+    font-family: var(--font-italiana);
+  }
+
+  .font-calligraphy {
+    font-family: var(--font-calligraphy);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0c;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2824;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d4af37;
+}
+
+/* Luxury Utilities */
+.bg-cinematic-radial {
+  background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.12) 0%, rgba(10, 10, 12, 0.98) 75%);
+}
+
+.bg-cinematic-glow {
+  background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.18) 0%, rgba(10, 10, 12, 0) 70%);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #fff2cc 0%, #d4af37 45%, #b38728 80%, #fbf5b7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-rose-gold-gradient {
+  background: linear-gradient(135deg, #fceade 0%, #e0a98b 50%, #b87556 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.border-gold-subtle {
+  border-color: rgba(212, 175, 55, 0.2);
+}
+
+.border-gold-glow {
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.18);
+}
+
+.glass-card {
+  background: rgba(18, 18, 24, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.glass-card-hover {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-card-hover:hover {
+  background: rgba(24, 24, 32, 0.9);
+  border-color: rgba(212, 175, 55, 0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 35px -10px rgba(212, 175, 55, 0.2);
+}
+
+.glass-nav {
+  background: rgba(10, 10, 12, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+/* Gold Button Hover Shimmer */
+.btn-gold {
+  position: relative;
+  background: linear-gradient(135deg, #d4af37 0%, #b89728 100%);
+  color: #0a0a0c;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+.btn-gold:hover {
+  background: linear-gradient(135deg, #edd269 0%, #c9a532 100%);
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.45);
+  transform: translateY(-1px);
+}
+.btn-gold::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 80%
+  );
+  transform: rotate(30deg) translateX(-100%);
+  transition: transform 0.7s ease;
+}
+.btn-gold:hover::after {
+  transform: rotate(30deg) translateX(100%);
+}
+
+.btn-outline-gold {
+  background: rgba(18, 18, 22, 0.6);
+  color: #f5f2ea;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  transition: all 0.3s ease;
+}
+.btn-outline-gold:hover {
+  border-color: #d4af37;
+  background: rgba(212, 175, 55, 0.12);
+  color: #f7e7ce;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(1.05); }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
