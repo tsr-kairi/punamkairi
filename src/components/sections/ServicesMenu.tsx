@@ -8,11 +8,27 @@ import { ServiceDetailModal } from './ServiceDetailModal';
 
 interface ServicesMenuProps {
   onBookService: (service: ServiceItem) => void;
+  activeCategory?: ServiceCategory | 'ALL';
+  onCategoryChange?: (category: ServiceCategory | 'ALL') => void;
 }
 
-export const ServicesMenu: React.FC<ServicesMenuProps> = ({ onBookService }) => {
-  const [activeCategory, setActiveCategory] = useState<ServiceCategory | 'ALL'>('BRIDAL');
+export const ServicesMenu: React.FC<ServicesMenuProps> = ({
+  onBookService,
+  activeCategory: controlledActiveCategory,
+  onCategoryChange
+}) => {
+  const [internalCategory, setInternalCategory] = useState<ServiceCategory | 'ALL'>('BRIDAL');
   const [selectedDetailService, setSelectedDetailService] = useState<ServiceItem | null>(null);
+
+  const activeCategory = controlledActiveCategory !== undefined ? controlledActiveCategory : internalCategory;
+
+  const handleSelectCategory = (cat: ServiceCategory | 'ALL') => {
+    if (onCategoryChange) {
+      onCategoryChange(cat);
+    } else {
+      setInternalCategory(cat);
+    }
+  };
 
   const filteredServices = activeCategory === 'ALL'
     ? servicesData
@@ -37,7 +53,7 @@ export const ServicesMenu: React.FC<ServicesMenuProps> = ({ onBookService }) => 
         <div className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth py-1 px-1 sm:justify-center mb-6 sm:mb-8">
           {/* All Services Pill */}
           <button
-            onClick={() => setActiveCategory('ALL')}
+            onClick={() => handleSelectCategory('ALL')}
             className={`px-4 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all whitespace-nowrap flex items-center gap-1.5 cursor-pointer flex-shrink-0 border ${
               activeCategory === 'ALL'
                 ? 'btn-gold border-transparent shadow-lg'
@@ -54,7 +70,7 @@ export const ServicesMenu: React.FC<ServicesMenuProps> = ({ onBookService }) => 
             return (
               <button
                 key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
+                onClick={() => handleSelectCategory(cat.id)}
                 className={`px-4 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all whitespace-nowrap flex items-center gap-1.5 cursor-pointer flex-shrink-0 border ${
                   isActive
                     ? 'btn-gold border-transparent shadow-lg'
@@ -95,7 +111,7 @@ export const ServicesMenu: React.FC<ServicesMenuProps> = ({ onBookService }) => 
         {activeCategory !== 'ALL' && (
           <div className="mt-8 text-center">
             <button
-              onClick={() => setActiveCategory('ALL')}
+              onClick={() => handleSelectCategory('ALL')}
               className="btn-outline-gold px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase inline-flex items-center gap-2 cursor-pointer shadow-md"
             >
               <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />

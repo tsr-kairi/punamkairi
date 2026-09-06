@@ -1,99 +1,69 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Sparkles, ArrowRight, ShieldCheck, MapPin, BookOpen, ChevronLeft, ChevronRight, Gift } from 'lucide-react';
-import { siteConfig } from '../../data/siteConfig';
+import { ChevronLeft, ChevronRight, Sparkles, ArrowRight, Layers } from 'lucide-react';
+import type { ServiceCategory } from '../../data/services';
 
 interface HeroProps {
   onOpenBooking: () => void;
   onOpenMenuQuickView?: () => void;
   onOpenOffersModal?: () => void;
+  onNavigateToCategory?: (category: ServiceCategory) => void;
 }
 
-interface HeroSlide {
+interface BannerSlide {
   id: string;
-  badge: string;
-  badgeIcon?: 'sparkles' | 'gift';
-  titlePrefix: string;
-  titleHighlight: string;
-  quote: string;
-  description: string;
-  primaryCtaText: string;
-  secondaryCtaText: string;
+  title: string;
   image: string;
-  artistBadgeName?: string;
-  artistBadgeRole?: string;
-  artistBadgeExp?: string;
-  actionType?: 'booking' | 'offer';
+  targetCategory: ServiceCategory;
+  categoryLabel: string;
+  quickPill: string;
+  badge: string;
 }
 
-const slides: HeroSlide[] = [
+const bannerSlides: BannerSlide[] = [
   {
-    id: 'slide-bridal',
-    badge: 'TRADITION • GRACE • TIMELESS BEAUTY',
-    badgeIcon: 'sparkles',
-    titlePrefix: 'ROYAL BRIDAL',
-    titleHighlight: 'MAKEUP ARTISTRY',
-    quote: 'Your Big Day, Our Expertise — Because Every Bride Deserves To Shine.',
-    description: 'Royal 16-hour long-wear bridal look customized for your skin undertone with flawless camera-ready finish and full jewelry & dupatta draping.',
-    primaryCtaText: 'BOOK BRIDAL',
-    secondaryCtaText: 'BRIDAL PACKAGES',
-    image: siteConfig.branding.banners.bridal,
-    artistBadgeName: siteConfig.artistName,
-    artistBadgeRole: 'Lead Bridal Artist',
-    artistBadgeExp: '4+ Years'
+    id: 'banner-bridal',
+    title: 'Bridal Makeup - Your Big Day, Our Expertise',
+    image: '/assets/images/banners/banner-bridal-makeup.jpg',
+    targetCategory: 'BRIDAL',
+    categoryLabel: 'Bridal Artistry',
+    quickPill: '👰 Bridal Makeup',
+    badge: 'Royal Look • 16-Hr Wear'
   },
   {
-    id: 'slide-prewedding',
-    badge: 'CAPTURE • ENHANCE • CELEBRATE',
-    badgeIcon: 'sparkles',
-    titlePrefix: 'PRE-WEDDING',
-    titleHighlight: 'PHOTO-PERFECT GLAM',
-    quote: 'Look Picture Perfect, Naturally — Love Looks Beautiful On You.',
-    description: 'Camera-ready natural enhancement, long-lasting high-definition base, and effortless glow crafted for pre-wedding outdoor and studio shoots.',
-    primaryCtaText: 'GET LOOK',
-    secondaryCtaText: 'PHOTO LOOKS',
-    image: siteConfig.branding.banners.preWedding,
-    artistBadgeName: 'Shoot Specialist',
-    artistBadgeRole: 'HD Camera Ready',
-    artistBadgeExp: 'Natural Glow'
+    id: 'banner-prewedding',
+    title: 'Pre-Wedding Makeup - Look Picture Perfect, Naturally',
+    image: '/assets/images/banners/banner-prewedding-makeup.jpg',
+    targetCategory: 'WEDDING_EVENTS',
+    categoryLabel: 'Wedding Ceremonies & Pre-Wedding',
+    quickPill: '📸 Pre-Wedding Look',
+    badge: 'Camera Ready • Natural Glow'
   },
   {
-    id: 'slide-facial-care',
-    badge: '🌸 CLEAN • CARE • REJUVENATE',
-    badgeIcon: 'gift',
-    titlePrefix: 'PROFESSIONAL',
-    titleHighlight: 'FACIAL CARE & GLOW',
-    quote: 'Healthy Skin, Natural Glow — Self Care Looks Good On You.',
-    description: '24K Gold, Diamond De-Tan & Hydra-Dew Facials. Deep cleansing, skin nourishment, pore tightening, and refreshing festival glow.',
-    primaryCtaText: 'CLAIM OFFER',
-    secondaryCtaText: 'FACIAL MENU',
-    image: siteConfig.branding.banners.facialCare,
-    artistBadgeName: 'Festive Facial Pass',
-    artistBadgeRole: '24K Gold & De-Tan',
-    artistBadgeExp: 'Puja Special',
-    actionType: 'offer'
+    id: 'banner-facial',
+    title: 'Professional Facial Care - Healthy Skin | Natural Glow',
+    image: '/assets/images/banners/banner-facial-care.jpg',
+    targetCategory: 'FACIALS',
+    categoryLabel: 'Facials & Skin Glow',
+    quickPill: '🌸 Facial Care & Glow',
+    badge: '24K Gold & Anti-Tan'
   },
   {
-    id: 'slide-party',
-    badge: 'LOOK FABULOUS • FEEL CONFIDENT • BE YOU',
-    badgeIcon: 'sparkles',
-    titlePrefix: 'SIGNATURE PARTY',
-    titleHighlight: 'OCCASION GLAM',
-    quote: 'Glam For Every Occasion — Makeup That Matches Your Vibe.',
-    description: 'Stunning, long-lasting evening glam tailored to artificial ballroom and festive pandal lighting with flawless zero-flashback finish.',
-    primaryCtaText: 'BOOK PARTY',
-    secondaryCtaText: 'PARTY LOOKS',
-    image: siteConfig.branding.banners.party,
-    artistBadgeName: 'Evening Glam',
-    artistBadgeRole: 'Pandal & Party',
-    artistBadgeExp: '12-Hr Lock'
+    id: 'banner-party',
+    title: 'Party Makeup - Glam For Every Occasion',
+    image: '/assets/images/banners/banner-party-makeup.jpg',
+    targetCategory: 'PARTY_OCCASION',
+    categoryLabel: 'Party & Festive Glam',
+    quickPill: '💄 Party Glam',
+    badge: 'High Impact • Zero Flashback'
   }
 ];
 
 export const Hero: React.FC<HeroProps> = ({
-  onOpenBooking,
-  onOpenMenuQuickView,
-  onOpenOffersModal
+  onOpenBooking: _onOpenBooking,
+  onOpenMenuQuickView: _onOpenMenuQuickView,
+  onOpenOffersModal: _onOpenOffersModal,
+  onNavigateToCategory
 }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [direction, setDirection] = useState(1);
@@ -102,12 +72,12 @@ export const Hero: React.FC<HeroProps> = ({
 
   const nextSlide = useCallback(() => {
     setDirection(1);
-    setCurrentSlideIndex((prev) => (prev + 1) % slides.length);
+    setCurrentSlideIndex((prev) => (prev + 1) % bannerSlides.length);
   }, []);
 
   const prevSlide = useCallback(() => {
     setDirection(-1);
-    setCurrentSlideIndex((prev) => (prev - 1 + slides.length) % slides.length);
+    setCurrentSlideIndex((prev) => (prev - 1 + bannerSlides.length) % bannerSlides.length);
   }, []);
 
   const goToSlide = (idx: number) => {
@@ -115,7 +85,7 @@ export const Hero: React.FC<HeroProps> = ({
     setCurrentSlideIndex(idx);
   };
 
-  // Robust Auto-slide timer: advances every 4.5 seconds
+  // Auto-play timer: advances every 4.5 seconds
   useEffect(() => {
     autoPlayTimerRef.current = setInterval(() => {
       nextSlide();
@@ -154,19 +124,11 @@ export const Hero: React.FC<HeroProps> = ({
     setTouchStartX(null);
   };
 
-  const currentSlide = slides[currentSlideIndex];
+  const currentSlide = bannerSlides[currentSlideIndex];
 
-  const handlePrimaryCta = () => {
-    if (currentSlide.actionType === 'offer' && onOpenOffersModal) {
-      onOpenOffersModal();
-    } else {
-      onOpenBooking();
-    }
-  };
-
-  const handleSecondaryCta = () => {
-    if (onOpenMenuQuickView) {
-      onOpenMenuQuickView();
+  const handleBannerClick = (slide: BannerSlide) => {
+    if (onNavigateToCategory) {
+      onNavigateToCategory(slide.targetCategory);
     } else {
       const el = document.getElementById('services');
       el?.scrollIntoView({ behavior: 'smooth' });
@@ -176,192 +138,98 @@ export const Hero: React.FC<HeroProps> = ({
   return (
     <section
       id="hero"
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      className="relative flex items-center justify-center overflow-hidden pt-4 pb-6 sm:pt-10 sm:pb-16 bg-[#0a0a0c]"
+      className="relative flex flex-col items-center justify-center overflow-hidden pt-2 sm:pt-6 pb-6 sm:pb-12 bg-[#0a0a0c]"
     >
       {/* Ambient Gold Glow & Vignette */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[700px] h-[300px] sm:h-[700px] bg-[#d4af37]/12 rounded-full blur-[110px] sm:blur-[130px] pointer-events-none animate-pulse-glow" />
-      <div className="absolute bottom-6 right-6 w-[200px] sm:w-[450px] h-[200px] sm:h-[450px] bg-[#c5a059]/8 rounded-full blur-[100px] sm:blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[800px] h-[300px] sm:h-[600px] bg-[#d4af37]/12 rounded-full blur-[110px] sm:blur-[140px] pointer-events-none" />
 
-      {/* Main Container */}
-      <div className="relative z-10 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 w-full">
+      {/* Main Banner Slider Container */}
+      <div className="relative z-10 max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8 w-full">
         
-        {/* Animated Slide Content (Left Text, Right Image on BOTH Mobile and Desktop) */}
-        <AnimatePresence mode="wait" custom={direction}>
-          <motion.div
-            key={currentSlide.id}
-            custom={direction}
-            initial={{ opacity: 0, x: direction * 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: direction * -40 }}
-            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="grid grid-cols-12 gap-3 sm:gap-8 lg:gap-14 items-center"
-          >
-            {/* LEFT COLUMN: Content (7 cols on mobile, 7 cols on desktop) */}
-            <div className="col-span-7 sm:col-span-7 flex flex-col items-start text-left">
-              
-              {/* Badge */}
-              <div className="inline-flex items-center gap-1.5 px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full border border-[#d4af37]/45 bg-[#14141d]/90 backdrop-blur-md text-[#f3e5ab] text-[9px] sm:text-xs font-semibold tracking-wider sm:tracking-widest uppercase mb-2 sm:mb-5 shadow-xl whitespace-nowrap">
-                {currentSlide.badgeIcon === 'gift' ? (
-                  <Gift className="w-3 h-3 text-[#d4af37] animate-bounce flex-shrink-0" />
-                ) : (
-                  <Sparkles className="w-3 h-3 text-[#d4af37] flex-shrink-0" />
-                )}
-                <span className="truncate">{currentSlide.badge}</span>
-              </div>
+        {/* Banner Carousel Card */}
+        <div
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-[#d4af37]/45 bg-[#121217] shadow-[0_10px_40px_rgba(0,0,0,0.85)] group cursor-pointer"
+        >
+          {/* Aspect Ratio Box to keep 100% visible on Mobile & Desktop */}
+          <div className="relative w-full aspect-[1024/535] overflow-hidden select-none">
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={currentSlide.id}
+                custom={direction}
+                initial={{ opacity: 0, scale: 0.98, x: direction * 40 }}
+                animate={{ opacity: 1, scale: 1, x: 0 }}
+                exit={{ opacity: 0, scale: 0.98, x: direction * -40 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                onClick={() => handleBannerClick(currentSlide)}
+                className="absolute inset-0 w-full h-full"
+              >
+                <img
+                  src={currentSlide.image}
+                  alt={currentSlide.title}
+                  className="w-full h-full object-cover sm:object-contain bg-[#111116]"
+                  loading="eager"
+                  draggable={false}
+                />
+              </motion.div>
+            </AnimatePresence>
 
-              {/* Title */}
-              <h1 className="text-xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold text-[#f7e7ce] tracking-tight leading-[1.1] uppercase mb-1 sm:mb-2">
-                {currentSlide.titlePrefix}
-                <span className="block text-sm sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-gold-gradient font-light tracking-[0.14em] mt-0.5 sm:mt-1.5">
-                  {currentSlide.titleHighlight}
-                </span>
-              </h1>
-
-              {/* Quote / Subtitle */}
-              <div className="relative my-1.5 sm:my-4">
-                <p className="text-xs sm:text-lg md:text-xl text-[#f3e5ab] font-serif-luxury italic tracking-wide font-normal leading-snug line-clamp-2 sm:line-clamp-none">
-                  "{currentSlide.quote}"
-                </p>
-                <div className="h-[1.5px] w-16 sm:w-28 bg-gradient-to-r from-[#d4af37]/70 via-[#d4af37] to-transparent mt-1.5 sm:mt-2.5" />
-              </div>
-
-              {/* Description (Visible on tablets & desktop, condensed on small mobile) */}
-              <p className="hidden sm:block max-w-xl text-xs sm:text-sm md:text-base text-[#cfccc4] font-light leading-relaxed mb-4 sm:mb-7">
-                {currentSlide.description}
-              </p>
-
-              {/* Action Buttons (Left-Aligned, Compact on Mobile) */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3.5 w-full sm:w-auto mt-1 sm:mt-2">
-                <button
-                  onClick={handlePrimaryCta}
-                  className="btn-gold px-3.5 sm:px-6 py-2 sm:py-3.5 rounded-full text-[10px] sm:text-xs font-bold tracking-wider uppercase flex items-center justify-center gap-1.5 shadow-xl cursor-pointer active:scale-95 transition-transform whitespace-nowrap"
-                >
-                  <Calendar className="w-3.5 h-3.5 text-[#0a0a0c] flex-shrink-0" />
-                  <span>{currentSlide.primaryCtaText}</span>
-                  <ArrowRight className="w-3 h-3 text-[#0a0a0c] hidden sm:inline flex-shrink-0" />
-                </button>
-
-                <button
-                  onClick={handleSecondaryCta}
-                  className="btn-outline-gold px-3 sm:px-5 py-2 sm:py-3.5 rounded-full text-[10px] sm:text-xs font-semibold tracking-wider uppercase flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 transition-transform whitespace-nowrap"
-                >
-                  <BookOpen className="w-3 h-3 text-[#d4af37] flex-shrink-0" />
-                  <span>{currentSlide.secondaryCtaText}</span>
-                </button>
-              </div>
-
-              {/* Desktop Trust Badges */}
-              <div className="hidden lg:grid grid-cols-3 gap-3 pt-6 border-t border-[#2a2824]/80 mt-6 w-full">
-                <div className="flex items-center gap-2 text-left">
-                  <div className="p-1.5 rounded-lg bg-[#16161d] border border-[#d4af37]/25 text-[#d4af37] flex-shrink-0">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                  </div>
-                  <div>
-                    <div className="text-[11px] font-semibold text-[#f7e7ce]">International Kits</div>
-                    <div className="text-[9px] text-[#a09d96]">Luxury Cosmetics</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 text-left">
-                  <div className="p-1.5 rounded-lg bg-[#16161d] border border-[#d4af37]/25 text-[#d4af37] flex-shrink-0">
-                    <Sparkles className="w-3.5 h-3.5" />
-                  </div>
-                  <div>
-                    <div className="text-[11px] font-semibold text-[#f7e7ce]">4K Camera Ready</div>
-                    <div className="text-[9px] text-[#a09d96]">HD & Airbrush</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 text-left">
-                  <div className="p-1.5 rounded-lg bg-[#16161d] border border-[#d4af37]/25 text-[#d4af37] flex-shrink-0">
-                    <MapPin className="w-3.5 h-3.5" />
-                  </div>
-                  <div>
-                    <div className="text-[11px] font-semibold text-[#f7e7ce]">Venue & Doorstep</div>
-                    <div className="text-[9px] text-[#a09d96]">Assam & Beyond</div>
-                  </div>
-                </div>
-              </div>
-
+            {/* Desktop Hover Hint Pill */}
+            <div
+              onClick={() => handleBannerClick(currentSlide)}
+              className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-20 hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-black/85 backdrop-blur-md border border-[#d4af37]/60 text-xs font-bold text-[#f7e7ce] uppercase tracking-wider shadow-2xl group-hover:bg-[#d4af37] group-hover:text-black transition-all cursor-pointer"
+            >
+              <span>Explore {currentSlide.categoryLabel}</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </div>
 
-            {/* RIGHT COLUMN: Image (5 cols on mobile, 5 cols on desktop) */}
-            <div className="col-span-5 sm:col-span-5 flex justify-center">
-              <div className="relative w-full max-w-[200px] sm:max-w-[340px] lg:max-w-none">
-                
-                {/* Glow Halo */}
-                <div className="absolute -inset-1.5 sm:-inset-3 rounded-2xl sm:rounded-3xl bg-gradient-to-tr from-[#d4af37]/35 via-[#c5a059]/10 to-transparent blur-md pointer-events-none" />
-                
-                {/* Image Card */}
-                <div className="relative rounded-xl sm:rounded-3xl overflow-hidden border border-[#d4af37]/45 bg-[#121216] shadow-2xl aspect-[3.2/4.4] sm:aspect-[3/4] group">
-                  <img
-                    src={currentSlide.image}
-                    alt={currentSlide.titlePrefix}
-                    className="w-full h-full object-cover object-top scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
-                    loading="eager"
-                  />
+            {/* Left Chevron Prev Button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                prevSlide();
+                resetTimer();
+              }}
+              aria-label="Previous Banner"
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-black/75 hover:bg-[#d4af37] text-white hover:text-black border border-white/20 hover:border-[#d4af37] flex items-center justify-center backdrop-blur-md transition-all active:scale-90 cursor-pointer shadow-xl opacity-80 sm:opacity-0 sm:group-hover:opacity-100"
+            >
+              <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
+            </button>
 
-                  {/* Cinematic Vignette Overlays */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-black/15 to-black/25 pointer-events-none" />
+            {/* Right Chevron Next Button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                nextSlide();
+                resetTimer();
+              }}
+              aria-label="Next Banner"
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-black/75 hover:bg-[#d4af37] text-white hover:text-black border border-white/20 hover:border-[#d4af37] flex items-center justify-center backdrop-blur-md transition-all active:scale-90 cursor-pointer shadow-xl opacity-80 sm:opacity-0 sm:group-hover:opacity-100"
+            >
+              <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
+            </button>
+          </div>
 
-                  {/* Slide Pill at Bottom of Image */}
-                  <div className="absolute bottom-2 left-2 right-2 sm:bottom-3.5 sm:left-3.5 sm:right-3.5 p-2 sm:p-3 rounded-lg sm:rounded-xl bg-[#0e0e14]/90 backdrop-blur-md border border-[#d4af37]/35 flex items-center justify-between shadow-2xl">
-                    <div className="flex items-center gap-1.5 sm:gap-2.5 overflow-hidden">
-                      <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full overflow-hidden border border-[#d4af37] bg-black flex-shrink-0">
-                        <img
-                          src={siteConfig.branding.logoImage}
-                          alt="PK Monogram"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="overflow-hidden">
-                        <div className="text-[10px] sm:text-xs font-bold text-[#f7e7ce] tracking-wide leading-none truncate">
-                          {currentSlide.artistBadgeName}
-                        </div>
-                        <div className="text-[8px] sm:text-[9px] text-[#d4af37] tracking-wider uppercase mt-0.5 font-semibold leading-none truncate">
-                          {currentSlide.artistBadgeRole}
-                        </div>
-                      </div>
-                    </div>
+          {/* Luxury Corner Accents */}
+          <div className="absolute top-0 left-0 w-3 sm:w-5 h-3 sm:h-5 border-t-2 border-l-2 border-[#d4af37] pointer-events-none" />
+          <div className="absolute top-0 right-0 w-3 sm:w-5 h-3 sm:h-5 border-t-2 border-r-2 border-[#d4af37] pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-3 sm:w-5 h-3 sm:h-5 border-b-2 border-l-2 border-[#d4af37] pointer-events-none" />
+          <div className="absolute bottom-0 right-0 w-3 sm:w-5 h-3 sm:h-5 border-b-2 border-r-2 border-[#d4af37] pointer-events-none" />
+        </div>
 
-                    <div className="text-right flex-shrink-0 pl-1">
-                      <div className="text-[10px] sm:text-xs font-bold text-[#f3e5ab] leading-none">
-                        {currentSlide.artistBadgeExp}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+        {/* Slide Indicators & Tap Hint */}
+        <div className="mt-3 sm:mt-4 flex items-center justify-between px-1">
+          {/* Tap Banner Hint */}
+          <div className="flex items-center gap-1.5 text-[10px] sm:text-xs text-[#d4af37] font-medium">
+            <Sparkles className="w-3 h-3 text-[#d4af37]" />
+            <span className="hidden sm:inline">Click banner to explore related services</span>
+            <span className="sm:hidden">Tap banner to view services</span>
+          </div>
 
-                {/* Luxury Corner Accents */}
-                <div className="absolute -top-1 -left-1 w-3 sm:w-4 h-3 sm:h-4 border-t-2 border-l-2 border-[#d4af37]" />
-                <div className="absolute -top-1 -right-1 w-3 sm:w-4 h-3 sm:h-4 border-t-2 border-r-2 border-[#d4af37]" />
-                <div className="absolute -bottom-1 -left-1 w-3 sm:w-4 h-3 sm:h-4 border-b-2 border-l-2 border-[#d4af37]" />
-                <div className="absolute -bottom-1 -right-1 w-3 sm:w-4 h-3 sm:h-4 border-b-2 border-r-2 border-[#d4af37]" />
-              </div>
-            </div>
-
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Manual Controls & Progress Indicators */}
-        <div className="mt-3 sm:mt-6 flex items-center justify-center gap-3 sm:gap-4">
-          {/* Prev Arrow */}
-          <button
-            onClick={() => {
-              prevSlide();
-              resetTimer();
-            }}
-            aria-label="Previous Slide"
-            className="p-1.5 sm:p-2 rounded-full bg-[#16161e] border border-[#2a2824] hover:border-[#d4af37] text-[#cfccc4] hover:text-[#d4af37] transition-all cursor-pointer active:scale-90"
-          >
-            <ChevronLeft className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
-          </button>
-
-          {/* Dots & Progress Bar */}
+          {/* Dots Indicator */}
           <div className="flex items-center gap-1.5 sm:gap-2">
-            {slides.map((s, idx) => {
+            {bannerSlides.map((s, idx) => {
               const isActive = currentSlideIndex === idx;
               return (
                 <button
@@ -370,28 +238,44 @@ export const Hero: React.FC<HeroProps> = ({
                     goToSlide(idx);
                     resetTimer();
                   }}
-                  aria-label={`Go to slide ${idx + 1}`}
+                  aria-label={`Go to banner ${idx + 1}`}
                   className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 cursor-pointer ${
                     isActive
-                      ? 'w-6 sm:w-8 bg-gradient-to-r from-[#d4af37] to-[#f3e5ab] shadow-md shadow-[#d4af37]/30'
+                      ? 'w-6 sm:w-8 bg-gradient-to-r from-[#d4af37] to-[#f3e5ab] shadow-md shadow-[#d4af37]/40'
                       : 'w-1.5 sm:w-2 bg-[#2a2824] hover:bg-[#4a473f]'
                   }`}
                 />
               );
             })}
           </div>
+        </div>
 
-          {/* Next Arrow */}
-          <button
-            onClick={() => {
-              nextSlide();
-              resetTimer();
-            }}
-            aria-label="Next Slide"
-            className="p-1.5 sm:p-2 rounded-full bg-[#16161e] border border-[#2a2824] hover:border-[#d4af37] text-[#cfccc4] hover:text-[#d4af37] transition-all cursor-pointer active:scale-90"
-          >
-            <ChevronRight className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
-          </button>
+        {/* Quick Category Shortcut Pills */}
+        <div className="mt-3.5 sm:mt-5 flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+          <div className="flex items-center gap-1 text-[10px] uppercase font-bold tracking-widest text-[#8e8c85] pl-1 flex-shrink-0 hidden md:flex">
+            <Layers className="w-3 h-3 text-[#d4af37]" />
+            <span>Quick Jump:</span>
+          </div>
+          {bannerSlides.map((slide, idx) => {
+            const isSlideActive = currentSlideIndex === idx;
+            return (
+              <button
+                key={slide.id}
+                onClick={() => {
+                  goToSlide(idx);
+                  handleBannerClick(slide);
+                }}
+                className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-semibold tracking-wider uppercase whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer flex-shrink-0 border ${
+                  isSlideActive
+                    ? 'bg-[#1e1e28] text-[#f7e7ce] border-[#d4af37] shadow-lg scale-[1.02]'
+                    : 'bg-[#121217] text-[#b0ada5] border-[#26242c] hover:border-[#d4af37]/40 hover:text-white'
+                }`}
+              >
+                <span>{slide.quickPill}</span>
+                <ArrowRight className="w-3 h-3 text-[#d4af37]" />
+              </button>
+            );
+          })}
         </div>
 
       </div>

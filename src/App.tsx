@@ -19,7 +19,7 @@ import { DigitalMenuQuickView } from './components/views/DigitalMenuQuickView';
 import { FestiveTopBanner } from './components/offers/FestiveTopBanner';
 import { FestiveFloatingBadge } from './components/offers/FestiveFloatingBadge';
 import { FestiveOffersModal } from './components/offers/FestiveOffersModal';
-import type { ServiceItem } from './data/services';
+import type { ServiceCategory, ServiceItem } from './data/services';
 
 export function App() {
   const [showReveal, setShowReveal] = useState(true);
@@ -27,6 +27,7 @@ export function App() {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [offersModalOpen, setOffersModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<ServiceItem | string | null>(null);
+  const [activeCategory, setActiveCategory] = useState<ServiceCategory | 'ALL'>('BRIDAL');
 
   // Detect URL parameter (e.g. ?view=menu or ?view=services or ?offer=durga-puja) on load
   useEffect(() => {
@@ -62,6 +63,14 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleNavigateToCategory = (category: ServiceCategory) => {
+    setActiveCategory(category);
+    const el = document.getElementById('services');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="relative min-h-screen bg-[#0a0a0c] text-[#f5f2ea] w-full max-w-full overflow-x-clip">
       
@@ -93,6 +102,7 @@ export function App() {
               onOpenBooking={() => handleOpenBooking()}
               onOpenMenuQuickView={handleSwitchToMenu}
               onOpenOffersModal={() => setOffersModalOpen(true)}
+              onNavigateToCategory={handleNavigateToCategory}
             />
 
             {/* 2. Key Pillars & Verified Metrics */}
@@ -102,7 +112,11 @@ export function App() {
             <AboutArtist onOpenBooking={() => handleOpenBooking()} />
 
             {/* 4. Digital Artistry Services Menu */}
-            <ServicesMenu onBookService={(service) => handleOpenBooking(service)} />
+            <ServicesMenu
+              activeCategory={activeCategory}
+              onCategoryChange={setActiveCategory}
+              onBookService={(service) => handleOpenBooking(service)}
+            />
 
             {/* 5. Transformation Portfolio Gallery */}
             <PortfolioSection onOpenBooking={(lookTitle) => handleOpenBooking(lookTitle)} />
