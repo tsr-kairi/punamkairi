@@ -63,7 +63,7 @@ export function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#0a0a0c] text-[#f5f2ea]">
+    <div className="relative min-h-screen bg-[#0a0a0c] text-[#f5f2ea] w-full max-w-full overflow-x-clip">
       
       {/* Brand Luxury Reveal Screen */}
       {showReveal && <BrandReveal onFinish={() => setShowReveal(false)} />}
@@ -87,7 +87,7 @@ export function App() {
           />
 
           {/* Main Content Sections */}
-          <main>
+          <main className="w-full max-w-full overflow-x-clip pb-16 sm:pb-0">
             {/* 1. Cinematic Auto-Sliding Hero Section */}
             <Hero
               onOpenBooking={() => handleOpenBooking()}

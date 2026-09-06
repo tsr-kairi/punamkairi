@@ -28,7 +28,7 @@ export const AboutArtist: React.FC<AboutArtistProps> = ({ onOpenBooking }) => {
   ];
 
   return (
-    <section id="about" className="py-20 sm:py-28 relative bg-[#0d0d10] border-y border-[#1c1b22]">
+    <section id="about" className="py-20 sm:py-28 relative bg-[#0d0d10] border-y border-[#1c1b22] overflow-hidden">
       {/* Background Subtle Gradient */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#d4af37]/5 rounded-full blur-3xl pointer-events-none" />
 

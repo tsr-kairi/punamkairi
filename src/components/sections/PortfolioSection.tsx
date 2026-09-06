@@ -33,7 +33,7 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ onOpenBookin
   };
 
   return (
-    <section id="portfolio" className="py-20 sm:py-28 bg-[#0a0a0c] relative">
+    <section id="portfolio" className="py-20 sm:py-28 bg-[#0a0a0c] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <SectionHeader

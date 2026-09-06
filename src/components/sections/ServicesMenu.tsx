@@ -21,7 +21,7 @@ export const ServicesMenu: React.FC<ServicesMenuProps> = ({ onBookService }) => 
   const currentCategoryInfo = serviceCategories.find((c) => c.id === activeCategory);
 
   return (
-    <section id="services" className="py-16 sm:py-28 bg-[#0d0d11] relative border-b border-[#1c1b22]">
+    <section id="services" className="py-16 sm:py-28 bg-[#0d0d11] relative border-b border-[#1c1b22] overflow-hidden">
       {/* Background Accent Glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] sm:w-[600px] h-[500px] sm:h-[600px] bg-[#d4af37]/5 rounded-full blur-[140px] pointer-events-none" />
 

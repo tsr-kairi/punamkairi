@@ -11,7 +11,7 @@ export const FestiveFloatingBadge: React.FC<FestiveFloatingBadgeProps> = ({ onOp
   if (!durgaPujaFestiveOffers.enabled) return null;
 
   return (
-    <aside aria-label="Festive special offers" className="fixed left-3 sm:left-6 bottom-20 sm:bottom-8 z-40">
+    <aside aria-label="Festive special offers" className="fixed left-3 sm:left-6 bottom-16 sm:bottom-8 z-30 max-w-[calc(100vw-24px)] box-border">
       <motion.button
         onClick={onOpenOffersModal}
         whileHover={{ scale: 1.05 }}

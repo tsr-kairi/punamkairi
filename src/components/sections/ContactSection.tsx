@@ -7,7 +7,7 @@ import { InstagramIcon, FacebookIcon } from '../common/SocialIcons';
 
 export const ContactSection: React.FC = () => {
   return (
-    <section id="contact" className="py-20 sm:py-28 bg-[#0a0a0c] relative">
+    <section id="contact" className="py-20 sm:py-28 bg-[#0a0a0c] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <SectionHeader
