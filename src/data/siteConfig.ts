@@ -40,6 +40,12 @@ export interface SiteConfig {
     logoImage: string;
     artistHeroImage: string;
     artistPortraitSquare: string;
+    banners: {
+      bridal: string;
+      preWedding: string;
+      facialCare: string;
+      party: string;
+    };
   };
   policy: {
     advanceBooking: string;
@@ -101,7 +107,13 @@ export const siteConfig: SiteConfig = {
     monogram: "PK",
     logoImage: "/assets/images/punam-kairi-logo.jpg",
     artistHeroImage: "/assets/images/punam-kairi-portrait.jpg",
-    artistPortraitSquare: "/assets/images/punam-kairi-portrait.jpg"
+    artistPortraitSquare: "/assets/images/punam-kairi-portrait.jpg",
+    banners: {
+      bridal: "/assets/images/banners/banner-bridal-makeup.jpg",
+      preWedding: "/assets/images/banners/banner-prewedding-makeup.jpg",
+      facialCare: "/assets/images/banners/banner-facial-care.jpg",
+      party: "/assets/images/banners/banner-party-makeup.jpg"
+    }
   },
   policy: {
     advanceBooking: "Prior booking requested to secure desired event date and time slot.",

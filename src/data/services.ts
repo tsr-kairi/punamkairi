@@ -42,7 +42,7 @@ export const servicesData: ServiceItem[] = [
     duration: '3.5 - 4.5 Hours',
     badge: 'Signature Experience',
     popular: true,
-    image: 'https://images.unsplash.com/photo-1596704017254-9b121068fb31?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/banner-bridal-makeup.jpg',
     includedItems: [
       'Personalized Skin Prep & Deep Hydration Ritual',
       'Ultra HD / Airbrush Long-Wear Foundation Base',
@@ -116,7 +116,7 @@ export const servicesData: ServiceItem[] = [
     duration: '2.5 - 3 Hours',
     badge: 'Popular Choice',
     popular: true,
-    image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/banner-prewedding-makeup.jpg',
     includedItems: [
       'Skin Conditioning & Illuminating Primer',
       'Medium-to-Full HD Foundation Base',
@@ -183,7 +183,7 @@ export const servicesData: ServiceItem[] = [
     priceType: 'contact',
     duration: '1.5 - 2 Hours',
     popular: true,
-    image: 'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/banner-party-makeup.jpg',
     includedItems: [
       'Quick Radiance Skin Preparation',
       'Flawless Medium-Coverage Foundation',
@@ -250,7 +250,7 @@ export const servicesData: ServiceItem[] = [
     duration: '60 - 75 Mins',
     badge: 'Durga Puja Special',
     popular: true,
-    image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/banner-facial-care.jpg',
     includedItems: [
       'Double Cleansing & Warm Herbal Steam',
       'Exfoliating Gold Micro-Bead Scrub',
