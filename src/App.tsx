@@ -63,7 +63,7 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleNavigateToCategory = (category: ServiceCategory) => {
+  const handleNavigateToCategory = (category: ServiceCategory | 'ALL') => {
     setActiveCategory(category);
     const el = document.getElementById('services');
     if (el) {

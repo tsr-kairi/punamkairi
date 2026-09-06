@@ -7,17 +7,29 @@ interface HeroProps {
   onOpenBooking: () => void;
   onOpenMenuQuickView?: () => void;
   onOpenOffersModal?: () => void;
-  onNavigateToCategory?: (category: ServiceCategory) => void;
+  onNavigateToCategory?: (category: ServiceCategory | 'ALL') => void;
 }
 
 interface BannerSlide {
   id: string;
   title: string;
   image: string;
-  targetCategory: ServiceCategory;
+  targetCategory: ServiceCategory | 'ALL';
 }
 
 const bannerSlides: BannerSlide[] = [
+  {
+    id: 'banner-durga-puja-opening',
+    title: 'শুভ শারদীয়া দুর্গোৎসবের অগ্রিম শুভেচ্ছা - We Are Initially Opening PK Makeup Artistry',
+    image: '/assets/images/banners/banner-durga-puja-opening.jpg',
+    targetCategory: 'ALL'
+  },
+  {
+    id: 'banner-durga-puja-facial-offer',
+    title: 'Sharadiya Durga Puja Special Offer - Professional Facial Care',
+    image: '/assets/images/banners/banner-durga-puja-facial-offer.jpg',
+    targetCategory: 'FACIALS'
+  },
   {
     id: 'banner-bridal',
     title: 'Bridal Makeup - Your Big Day, Our Expertise',
