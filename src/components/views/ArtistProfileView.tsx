@@ -29,15 +29,16 @@ export const ArtistProfileView: React.FC<ArtistProfileViewProps> = ({
   onOpenBooking
 }) => {
   const handleShare = () => {
+    const shareUrl = typeof window !== 'undefined' ? `${window.location.origin}/profile` : 'https://punamkairi.com/profile';
     if (navigator.share) {
       navigator.share({
         title: `${siteConfig.artistName} - Professional Makeup Artist Profile`,
-        text: `Check out the official makeup artistry portfolio & profile of ${siteConfig.artistName} in Sribhumi, Assam`,
-        url: window.location.href,
+        text: `Check out the official makeup artistry portfolio & profile of ${siteConfig.artistName} in Sribhumi, Assam: ${shareUrl}`,
+        url: shareUrl,
       }).catch(() => {});
     } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert('Profile link copied to clipboard!');
+      navigator.clipboard.writeText(shareUrl);
+      alert('Profile link copied to clipboard: ' + shareUrl);
     }
   };
 

@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { BrandReveal } from './components/common/BrandReveal';
 import { Navbar } from './components/layout/Navbar';
 import { Hero } from './components/sections/Hero';
@@ -21,29 +22,13 @@ import { FestiveFloatingBadge } from './components/offers/FestiveFloatingBadge';
 import { FestiveOffersModal } from './components/offers/FestiveOffersModal';
 import type { ServiceCategory, ServiceItem } from './data/services';
 
-export function App() {
+function AppContent() {
+  const navigate = useNavigate();
   const [showReveal, setShowReveal] = useState(true);
-  const [currentView, setCurrentView] = useState<'full' | 'menu' | 'profile'>('full');
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [offersModalOpen, setOffersModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<ServiceItem | string | null>(null);
   const [activeCategory, setActiveCategory] = useState<ServiceCategory | 'ALL'>('BRIDAL');
-
-  // Detect URL parameter (e.g. ?view=menu or ?view=profile or ?offer=durga-puja) on load
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const viewParam = params.get('view');
-      if (viewParam === 'menu' || viewParam === 'services') {
-        setCurrentView('menu');
-      } else if (viewParam === 'profile' || viewParam === 'artist' || viewParam === 'about') {
-        setCurrentView('profile');
-      }
-      if (params.get('offer') === 'durga-puja') {
-        setOffersModalOpen(true);
-      }
-    }
-  }, []);
 
   const handleOpenBooking = (service?: ServiceItem | string) => {
     setSelectedService(service || null);
@@ -53,21 +38,6 @@ export function App() {
   const handleCloseBooking = () => {
     setBookingModalOpen(false);
     setSelectedService(null);
-  };
-
-  const handleSwitchToMenu = () => {
-    setCurrentView('menu');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleSwitchToProfile = () => {
-    setCurrentView('profile');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleSwitchToFullSite = () => {
-    setCurrentView('full');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleNavigateToCategory = (category: ServiceCategory | 'ALL') => {
@@ -87,76 +57,122 @@ export function App() {
       {/* Durga Puja Top Announcement Banner */}
       <FestiveTopBanner onOpenOffersModal={() => setOffersModalOpen(true)} />
 
-      {/* Conditional Rendering: Focused Views vs Full Website */}
-      {currentView === 'profile' ? (
-        <ArtistProfileView
-          onBackToHome={handleSwitchToFullSite}
-          onOpenBooking={() => handleOpenBooking()}
-        />
-      ) : currentView === 'menu' ? (
-        <DigitalMenuQuickView
-          onSelectServiceToBook={(service) => handleOpenBooking(service)}
-          onSwitchToFullSite={handleSwitchToFullSite}
-          onOpenOffersModal={() => setOffersModalOpen(true)}
-        />
-      ) : (
-        <>
-          {/* Sticky Header Navigation */}
-          <Navbar
-            onOpenBooking={() => handleOpenBooking()}
-            onOpenMenuQuickView={handleSwitchToMenu}
-            onOpenProfile={handleSwitchToProfile}
-          />
-
-          {/* Main Content Sections */}
-          <main className="w-full max-w-full overflow-x-clip pb-16 sm:pb-0">
-            {/* 1. Cinematic Auto-Sliding Hero Section */}
-            <Hero
+      {/* Route-Based Page Views */}
+      <Routes>
+        {/* 1. Dedicated Artist Profile Page (Route: /profile) */}
+        <Route
+          path="/profile"
+          element={
+            <ArtistProfileView
+              onBackToHome={() => {
+                navigate('/');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
               onOpenBooking={() => handleOpenBooking()}
-              onOpenMenuQuickView={handleSwitchToMenu}
+            />
+          }
+        />
+
+        {/* Profile Aliases */}
+        <Route path="/artist" element={<Navigate to="/profile" replace />} />
+        <Route path="/about" element={<Navigate to="/profile" replace />} />
+        <Route path="/punam" element={<Navigate to="/profile" replace />} />
+
+        {/* 2. Focused Digital Menu View (Route: /menu) */}
+        <Route
+          path="/menu"
+          element={
+            <DigitalMenuQuickView
+              onSelectServiceToBook={(service) => handleOpenBooking(service)}
+              onSwitchToFullSite={() => {
+                navigate('/');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
               onOpenOffersModal={() => setOffersModalOpen(true)}
-              onNavigateToCategory={handleNavigateToCategory}
             />
+          }
+        />
+        <Route path="/services" element={<Navigate to="/menu" replace />} />
+        <Route path="/services-menu" element={<Navigate to="/menu" replace />} />
 
-            {/* 2. Key Pillars & Verified Metrics */}
-            <StatsSection />
+        {/* 3. Main Full Landing Page (Route: /) */}
+        <Route
+          path="/"
+          element={
+            <>
+              {/* Sticky Header Navigation */}
+              <Navbar
+                onOpenBooking={() => handleOpenBooking()}
+                onOpenMenuQuickView={() => {
+                  navigate('/menu');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                onOpenProfile={() => {
+                  navigate('/profile');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+              />
 
-            {/* 3. Digital Artistry Services Menu (Redesigned Creamy Style) */}
-            <ServicesMenu
-              activeCategory={activeCategory}
-              onCategoryChange={setActiveCategory}
-              onBookService={(service) => handleOpenBooking(service)}
-            />
+              {/* Main Content Sections */}
+              <main className="w-full max-w-full overflow-x-clip pb-16 sm:pb-0">
+                {/* 1. Cinematic Auto-Sliding Hero Section */}
+                <Hero
+                  onOpenBooking={() => handleOpenBooking()}
+                  onOpenMenuQuickView={() => {
+                    navigate('/menu');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  onOpenOffersModal={() => setOffersModalOpen(true)}
+                  onNavigateToCategory={handleNavigateToCategory}
+                />
 
-            {/* 5. Transformation Portfolio Gallery */}
-            <PortfolioSection onOpenBooking={(lookTitle) => handleOpenBooking(lookTitle)} />
+                {/* 2. Key Pillars & Verified Metrics */}
+                <StatsSection />
 
-            {/* 6. Signature Skills & Mastery Repertoire */}
-            <SkillsSection />
+                {/* 3. Digital Artistry Services Menu (Redesigned Creamy Style) */}
+                <ServicesMenu
+                  activeCategory={activeCategory}
+                  onCategoryChange={setActiveCategory}
+                  onBookService={(service) => handleOpenBooking(service)}
+                />
 
-            {/* 7. Why Choose Punam Kairi */}
-            <WhyChooseSection />
+                {/* 4. Transformation Portfolio Gallery */}
+                <PortfolioSection onOpenBooking={(lookTitle) => handleOpenBooking(lookTitle)} />
 
-            {/* 8. QR Code Pass & Print Engine */}
-            <QRCodeSection onOpenMenuQuickView={handleSwitchToMenu} />
+                {/* 5. Signature Skills & Mastery Repertoire */}
+                <SkillsSection />
 
-            {/* 9. FAQs */}
-            <FAQSection />
+                {/* 6. Why Choose Punam Kairi */}
+                <WhyChooseSection />
 
-            {/* 10. Contact, Directions & Social Media */}
-            <ContactSection />
-          </main>
+                {/* 7. QR Code Pass & Print Engine */}
+                <QRCodeSection onOpenMenuQuickView={() => {
+                  navigate('/menu');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }} />
 
-          {/* Footer */}
-          <Footer />
+                {/* 8. FAQs */}
+                <FAQSection />
 
-          {/* Desktop Floating WhatsApp Button */}
-          <FloatingWhatsApp />
+                {/* 9. Contact, Directions & Social Media */}
+                <ContactSection />
+              </main>
 
-          {/* Mobile Persistent Bottom Action Dock */}
-          <MobileBottomBar onOpenBooking={() => handleOpenBooking()} />
-        </>
-      )}
+              {/* Footer */}
+              <Footer />
+
+              {/* Desktop Floating WhatsApp Button */}
+              <FloatingWhatsApp />
+
+              {/* Mobile Persistent Bottom Action Dock */}
+              <MobileBottomBar onOpenBooking={() => handleOpenBooking()} />
+            </>
+          }
+        />
+
+        {/* Fallback to Home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
 
       {/* Persistent Floating Festive Offer Badge */}
       <FestiveFloatingBadge onOpenOffersModal={() => setOffersModalOpen(true)} />
@@ -175,6 +191,14 @@ export function App() {
       />
 
     </div>
+  );
+}
+
+export function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
   );
 }
 
