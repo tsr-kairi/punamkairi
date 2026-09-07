@@ -20,6 +20,7 @@ import { ArtistProfileView } from './components/views/ArtistProfileView';
 import { FestiveTopBanner } from './components/offers/FestiveTopBanner';
 import { FestiveFloatingBadge } from './components/offers/FestiveFloatingBadge';
 import { FestiveOffersModal } from './components/offers/FestiveOffersModal';
+import { LiveActivityTimeline } from './components/common/LiveActivityTimeline';
 import type { ServiceCategory, ServiceItem } from './data/services';
 
 function AppContent() {
@@ -124,6 +125,12 @@ function AppContent() {
                   }}
                   onOpenOffersModal={() => setOffersModalOpen(true)}
                   onNavigateToCategory={handleNavigateToCategory}
+                />
+
+                {/* Live Real-Time Customer Booking & Durga Puja Claims Timeline Feed */}
+                <LiveActivityTimeline
+                  onOpenBooking={(service) => handleOpenBooking(service)}
+                  onOpenOffersModal={() => setOffersModalOpen(true)}
                 />
 
                 {/* 2. Key Pillars & Verified Metrics */}

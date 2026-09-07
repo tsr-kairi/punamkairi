@@ -2,6 +2,7 @@ import React from 'react';
 import { Calendar, User, Phone, MapPin, Tag, Sparkles, MessageCircle, ArrowLeft, ShieldCheck } from 'lucide-react';
 import type { BookingFormData } from '../../utils/whatsapp';
 import { formatDisplayDate, getBookingWhatsAppUrl } from '../../utils/whatsapp';
+import { recordBookingActivity } from '../../utils/activityTracker';
 import confetti from 'canvas-confetti';
 
 interface BookingSummaryProps {
@@ -15,6 +16,17 @@ export const BookingSummary: React.FC<BookingSummaryProps> = ({
   onEdit,
 }) => {
   const handleSendToWhatsApp = () => {
+    // Record live booking activity for social proof ticker
+    try {
+      recordBookingActivity(
+        formData.customerName,
+        formData.customerLocation,
+        formData.serviceName
+      );
+    } catch {
+      // safe fallback
+    }
+
     // Trigger festive celebratory confetti
     try {
       confetti({

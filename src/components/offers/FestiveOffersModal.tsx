@@ -4,6 +4,7 @@ import { X, Sparkles, Gift, Check, MessageCircle, Clock, ShieldCheck, Tag } from
 import { durgaPujaFestiveOffers } from '../../data/offers';
 import type { FestiveOffer } from '../../data/offers';
 import { getOfferClaimWhatsAppUrl } from '../../utils/whatsapp';
+import { recordOfferClaimActivity } from '../../utils/activityTracker';
 import confetti from 'canvas-confetti';
 
 interface FestiveOffersModalProps {
@@ -51,6 +52,13 @@ export const FestiveOffersModal: React.FC<FestiveOffersModalProps> = ({ isOpen, 
   if (!isOpen) return null;
 
   const handleClaimOffer = (offer: FestiveOffer) => {
+    // Record claim activity for social proof ticker
+    try {
+      recordOfferClaimActivity(offer.title, 'Festive Client', 'Sribhumi / Assam');
+    } catch {
+      // safe fallback
+    }
+
     try {
       confetti({
         particleCount: 90,
