@@ -4,12 +4,12 @@ import { X, Sparkles, Gift, Check, MessageCircle, Clock, ShieldCheck, Tag } from
 import { durgaPujaFestiveOffers } from '../../data/offers';
 import type { FestiveOffer } from '../../data/offers';
 import { getOfferClaimWhatsAppUrl } from '../../utils/whatsapp';
-import { recordOfferClaimActivity } from '../../utils/activityTracker';
 import confetti from 'canvas-confetti';
 
 interface FestiveOffersModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onClaimOffer?: (offerTitle: string) => void;
 }
 
 // Maa Durga Divine Artistry Watermark SVG
@@ -34,7 +34,7 @@ const DurgaWatermarkSvg: React.FC<{ className?: string }> = ({ className = "w-32
   </svg>
 );
 
-export const FestiveOffersModal: React.FC<FestiveOffersModalProps> = ({ isOpen, onClose }) => {
+export const FestiveOffersModal: React.FC<FestiveOffersModalProps> = ({ isOpen, onClose, onClaimOffer }) => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -52,13 +52,6 @@ export const FestiveOffersModal: React.FC<FestiveOffersModalProps> = ({ isOpen, 
   if (!isOpen) return null;
 
   const handleClaimOffer = (offer: FestiveOffer) => {
-    // Record claim activity for social proof ticker
-    try {
-      recordOfferClaimActivity(offer.title, 'Festive Client', 'Sribhumi / Assam');
-    } catch {
-      // safe fallback
-    }
-
     try {
       confetti({
         particleCount: 90,
@@ -70,8 +63,12 @@ export const FestiveOffersModal: React.FC<FestiveOffersModalProps> = ({ isOpen, 
       // safe fallback
     }
 
-    const whatsappUrl = getOfferClaimWhatsAppUrl(offer);
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    if (onClaimOffer) {
+      onClaimOffer(offer.title);
+    } else {
+      const whatsappUrl = getOfferClaimWhatsAppUrl(offer);
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (

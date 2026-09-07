@@ -1,173 +1,67 @@
-export interface LiveActivityItem {
+export interface RealCustomerActivity {
   id: string;
   customerName: string;
   location: string;
-  serviceOrOffer: string;
-  type: 'booking' | 'offer_claim';
   timestamp: number;
-  badge: string;
-  avatarLetter: string;
 }
 
-const STORAGE_KEY = 'pk_live_booking_activities';
-const ACTIVITY_UPDATE_EVENT = 'pk_activity_feed_updated';
+const STORAGE_KEY = 'pk_real_customer_bookings_v2';
+const ACTIVITY_UPDATE_EVENT = 'pk_real_activity_updated';
 
-// Authentic default baseline activities for immediate social proof from Assam & surrounding regions
-const defaultInitialActivities: LiveActivityItem[] = [
-  {
-    id: 'act-1',
-    customerName: 'Ananya Deb',
-    location: 'Sribhumi / Karimganj',
-    serviceOrOffer: 'Royal Sharodiya Bridal Package',
-    type: 'offer_claim',
-    timestamp: Date.now() - 3 * 60 * 1000, // 3 mins ago
-    badge: '🌸 PUJA DEAL CLAIMED',
-    avatarLetter: 'A'
-  },
-  {
-    id: 'act-2',
-    customerName: 'Sneha Paul',
-    location: 'Silchar',
-    serviceOrOffer: '24K Gold Foil Glow Facial',
-    type: 'booking',
-    timestamp: Date.now() - 11 * 60 * 1000, // 11 mins ago
-    badge: '✨ APPOINTMENT BOOKED',
-    avatarLetter: 'S'
-  },
-  {
-    id: 'act-3',
-    customerName: 'Debolina Sen',
-    location: 'Lowairpoa Kanmoon Road',
-    serviceOrOffer: 'Pre-Puja 24K Gold Facial + Free Threading',
-    type: 'offer_claim',
-    timestamp: Date.now() - 24 * 60 * 1000, // 24 mins ago
-    badge: '🌸 PUJA DEAL CLAIMED',
-    avatarLetter: 'D'
-  },
-  {
-    id: 'act-4',
-    customerName: 'Mampi Nath',
-    location: 'Badarpur',
-    serviceOrOffer: 'Signature Royal Bridal Makeup',
-    type: 'booking',
-    timestamp: Date.now() - 48 * 60 * 1000, // 48 mins ago
-    badge: '👑 BRIDAL RESERVED',
-    avatarLetter: 'M'
-  },
-  {
-    id: 'act-5',
-    customerName: 'Priyanka Das',
-    location: 'Hailakandi',
-    serviceOrOffer: 'Mahashtami & Navami Night Glam',
-    type: 'offer_claim',
-    timestamp: Date.now() - 75 * 60 * 1000, // 1.2 hrs ago
-    badge: '✨ FESTIVE GLAM',
-    avatarLetter: 'P'
-  },
-  {
-    id: 'act-6',
-    customerName: 'Riya Bhowmik',
-    location: 'Dharmanagar',
-    serviceOrOffer: 'Pre-Puja Duo Glow (Mother & Daughter)',
-    type: 'offer_claim',
-    timestamp: Date.now() - 110 * 60 * 1000, // 1.8 hrs ago
-    badge: '👭 DUO GLOW DEAL',
-    avatarLetter: 'R'
-  },
-  {
-    id: 'act-7',
-    customerName: 'Tanushree Roy',
-    location: 'Near Longai Bridge, Lowairpoa',
-    serviceOrOffer: 'Bridal High-Definition (HD) Makeup',
-    type: 'booking',
-    timestamp: Date.now() - 160 * 60 * 1000, // 2.6 hrs ago
-    badge: '👑 BRIDAL RESERVED',
-    avatarLetter: 'T'
-  }
-];
-
-export function getLiveActivities(): LiveActivityItem[] {
+// Empty by default - ONLY real customer submissions will be shown
+export function getRealActivities(): RealCustomerActivity[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultInitialActivities));
-      return defaultInitialActivities;
-    }
+    if (!raw) return [];
     const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed) && parsed.length > 0) {
-      return parsed;
+    if (Array.isArray(parsed)) {
+      return parsed.filter(
+        (item): item is RealCustomerActivity =>
+          Boolean(item && typeof item.customerName === 'string' && item.customerName.trim().length > 0)
+      );
     }
-    return defaultInitialActivities;
+    return [];
   } catch {
-    return defaultInitialActivities;
+    return [];
   }
 }
 
-export function recordBookingActivity(
+export function recordRealCustomerActivity(
   customerName: string,
-  location: string,
-  serviceName: string
-): LiveActivityItem {
-  const cleanName = customerName.trim() || 'Client';
-  const cleanLocation = location.trim() || 'Sribhumi';
-  const avatarLetter = cleanName.charAt(0).toUpperCase() || 'P';
+  location: string
+): RealCustomerActivity | null {
+  const cleanName = customerName.trim();
+  const cleanLocation = location.trim();
 
-  const newActivity: LiveActivityItem = {
-    id: `book-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+  if (!cleanName) return null;
+
+  const newActivity: RealCustomerActivity = {
+    id: `rec-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
     customerName: cleanName,
-    location: cleanLocation,
-    serviceOrOffer: serviceName,
-    type: 'booking',
-    timestamp: Date.now(),
-    badge: serviceName.toLowerCase().includes('bridal') ? '👑 BRIDAL RESERVED' : '✨ APPOINTMENT BOOKED',
-    avatarLetter
+    location: cleanLocation || 'Sribhumi / Assam',
+    timestamp: Date.now()
   };
 
-  saveAndDispatchActivity(newActivity);
-  return newActivity;
-}
-
-export function recordOfferClaimActivity(
-  offerTitle: string,
-  customerName?: string,
-  location?: string
-): LiveActivityItem {
-  const cleanName = customerName?.trim() || 'Festive Guest';
-  const cleanLocation = location?.trim() || 'Sribhumi / Assam';
-  const avatarLetter = cleanName.charAt(0).toUpperCase() || '🌸';
-
-  const newActivity: LiveActivityItem = {
-    id: `claim-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
-    customerName: cleanName,
-    location: cleanLocation,
-    serviceOrOffer: offerTitle,
-    type: 'offer_claim',
-    timestamp: Date.now(),
-    badge: '🌸 PUJA DEAL CLAIMED',
-    avatarLetter
-  };
-
-  saveAndDispatchActivity(newActivity);
-  return newActivity;
-}
-
-function saveAndDispatchActivity(item: LiveActivityItem) {
   try {
-    const current = getLiveActivities();
-    // Keep max 20 latest activities with new one at top
-    const updated = [item, ...current.filter((c) => c.id !== item.id)].slice(0, 20);
+    const current = getRealActivities();
+    // Keep max 25 latest real activities with new one at top
+    const updated = [newActivity, ...current.filter((c) => c.id !== newActivity.id)].slice(0, 25);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
 
     // Dispatch global event for instant UI sync across all open tabs/components
-    window.dispatchEvent(new CustomEvent(ACTIVITY_UPDATE_EVENT, { detail: item }));
+    window.dispatchEvent(new CustomEvent(ACTIVITY_UPDATE_EVENT, { detail: newActivity }));
   } catch (err) {
-    console.warn('Could not store live activity:', err);
+    console.warn('Could not store real activity:', err);
   }
+
+  return newActivity;
 }
 
-export function subscribeToActivityUpdates(callback: (activities: LiveActivityItem[]) => void): () => void {
+export function subscribeToRealActivities(
+  callback: (activities: RealCustomerActivity[]) => void
+): () => void {
   const handler = () => {
-    callback(getLiveActivities());
+    callback(getRealActivities());
   };
 
   window.addEventListener(ACTIVITY_UPDATE_EVENT, handler);

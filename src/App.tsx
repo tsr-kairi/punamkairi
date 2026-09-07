@@ -127,11 +127,8 @@ function AppContent() {
                   onNavigateToCategory={handleNavigateToCategory}
                 />
 
-                {/* Live Real-Time Customer Booking & Durga Puja Claims Timeline Feed */}
-                <LiveActivityTimeline
-                  onOpenBooking={(service) => handleOpenBooking(service)}
-                  onOpenOffersModal={() => setOffersModalOpen(true)}
-                />
+                {/* Live Real-Time Customer Booking Activity Timeline Feed (Only Real Submissions: Name + Address + Time) */}
+                <LiveActivityTimeline />
 
                 {/* 2. Key Pillars & Verified Metrics */}
                 <StatsSection />
@@ -195,6 +192,10 @@ function AppContent() {
       <FestiveOffersModal
         isOpen={offersModalOpen}
         onClose={() => setOffersModalOpen(false)}
+        onClaimOffer={(offerTitle) => {
+          setOffersModalOpen(false);
+          handleOpenBooking(offerTitle);
+        }}
       />
 
     </div>
