@@ -12,6 +12,16 @@ interface ServicesMenuProps {
   onCategoryChange?: (category: ServiceCategory | 'ALL') => void;
 }
 
+const categoryIcons: Record<string, string> = {
+  ALL: '✨',
+  BRIDAL: '👰',
+  WEDDING_EVENTS: '📸',
+  PARTY_OCCASION: '💄',
+  FACIALS: '🌸',
+  THREADING: '✂️',
+  SPECIALIZED: '💎',
+};
+
 export const ServicesMenu: React.FC<ServicesMenuProps> = ({
   onBookService,
   activeCategory: controlledActiveCategory,
@@ -37,65 +47,72 @@ export const ServicesMenu: React.FC<ServicesMenuProps> = ({
   const currentCategoryInfo = serviceCategories.find((c) => c.id === activeCategory);
 
   return (
-    <section id="services" className="py-16 sm:py-28 bg-[#0d0d11] relative border-b border-[#1c1b22] overflow-hidden">
-      {/* Background Accent Glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] sm:w-[600px] h-[500px] sm:h-[600px] bg-[#d4af37]/5 rounded-full blur-[140px] pointer-events-none" />
+    <section id="services" className="py-16 sm:py-28 bg-[#0b0b10] relative border-b border-[#1c1b24] overflow-hidden">
+      {/* Creamy Gold Ambient Lighting */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[350px] sm:w-[650px] h-[350px] sm:h-[650px] bg-[#d4af37]/8 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[250px] h-[250px] bg-[#f7e7ce]/5 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
         
         <SectionHeader
-          badge="Digital Artistry Menu"
-          title="THE SERVICES COLLECTION"
-          subtitle="Explore our bespoke bridal, ceremony, skin-care facials, and high-glam makeup experiences."
+          badge="Couture Services & Experiences"
+          title="THE SIGNATURE COLLECTION"
+          subtitle="Tone-calibrated bridal transformations, pre-puja facial rejuvenation, and festive glam tailored with perfection."
         />
 
-        {/* Single-Row Horizontally Scrollable Category Selector Bar */}
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth py-1 px-1 sm:justify-center mb-6 sm:mb-8">
-          {/* All Services Pill */}
-          <button
-            onClick={() => handleSelectCategory('ALL')}
-            className={`px-4 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all whitespace-nowrap flex items-center gap-1.5 cursor-pointer flex-shrink-0 border ${
-              activeCategory === 'ALL'
-                ? 'btn-gold border-transparent shadow-lg'
-                : 'bg-[#14141a] text-[#a8a59e] border-[#2a2824] hover:border-[#d4af37]/40 hover:text-white'
-            }`}
-          >
-            <Layers className="w-3.5 h-3.5" />
-            <span>All Services ({servicesData.length})</span>
-          </button>
+        {/* Mobile App-Style Horizontal Category Carousel */}
+        <div className="relative mb-6 sm:mb-8">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth py-2 px-1 sm:justify-center">
+            {/* All Services Tab */}
+            <button
+              onClick={() => handleSelectCategory('ALL')}
+              className={`px-4 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all whitespace-nowrap flex items-center gap-2 cursor-pointer flex-shrink-0 border shadow-md active:scale-95 ${
+                activeCategory === 'ALL'
+                  ? 'bg-gradient-to-r from-[#d4af37] via-[#f3e5ab] to-[#d4af37] text-black border-transparent shadow-[0_4px_20px_rgba(212,175,55,0.35)] font-extrabold'
+                  : 'bg-[#14141d] text-[#b0ada5] border-[#292736] hover:border-[#d4af37]/50 hover:text-white'
+              }`}
+            >
+              <span>{categoryIcons['ALL']}</span>
+              <span>All Looks</span>
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${activeCategory === 'ALL' ? 'bg-black/30 text-black font-black' : 'bg-[#222130] text-[#8e8c85]'}`}>
+                {servicesData.length}
+              </span>
+            </button>
 
-          {serviceCategories.map((cat) => {
-            const isActive = activeCategory === cat.id;
-            const count = servicesData.filter((s) => s.category === cat.id).length;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => handleSelectCategory(cat.id)}
-                className={`px-4 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all whitespace-nowrap flex items-center gap-1.5 cursor-pointer flex-shrink-0 border ${
-                  isActive
-                    ? 'btn-gold border-transparent shadow-lg'
-                    : 'bg-[#14141a] text-[#a8a59e] border-[#2a2824] hover:border-[#d4af37]/40 hover:text-white'
-                }`}
-              >
-                <span>{cat.label}</span>
-                <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${isActive ? 'bg-black/40 text-white' : 'bg-[#22212a] text-[#8e8c85]'}`}>
-                  {count}
-                </span>
-              </button>
-            );
-          })}
+            {serviceCategories.map((cat) => {
+              const isActive = activeCategory === cat.id;
+              const count = servicesData.filter((s) => s.category === cat.id).length;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => handleSelectCategory(cat.id)}
+                  className={`px-4 py-2.5 rounded-full text-xs tracking-wider uppercase transition-all whitespace-nowrap flex items-center gap-2 cursor-pointer flex-shrink-0 border shadow-md active:scale-95 ${
+                    isActive
+                      ? 'bg-gradient-to-r from-[#d4af37] via-[#f3e5ab] to-[#d4af37] text-black border-transparent shadow-[0_4px_20px_rgba(212,175,55,0.35)] font-extrabold'
+                      : 'bg-[#14141d] text-[#b0ada5] border-[#292736] hover:border-[#d4af37]/50 hover:text-white font-semibold'
+                  }`}
+                >
+                  <span>{categoryIcons[cat.id] || '✨'}</span>
+                  <span>{cat.label}</span>
+                  <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${isActive ? 'bg-black/30 text-black font-black' : 'bg-[#222130] text-[#8e8c85]'}`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Active Category Lead Info */}
+        {/* Active Category Description Banner */}
         {currentCategoryInfo && (
-          <div className="text-center max-w-xl mx-auto mb-8 sm:mb-12">
-            <p className="text-xs sm:text-sm text-[#d4af37] font-serif-luxury italic tracking-wide">
-              {currentCategoryInfo.description}
+          <div className="text-center max-w-xl mx-auto mb-8 sm:mb-12 px-2">
+            <p className="text-xs sm:text-sm text-[#e8d5b5] font-serif-luxury italic tracking-wide">
+              "{currentCategoryInfo.description}"
             </p>
           </div>
         )}
 
-        {/* Services Grid (Compact app cards on mobile) */}
+        {/* Services Grid (Compact & Creamy Beauty Cards) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {filteredServices.map((service) => (
             <ServiceCard
@@ -107,7 +124,7 @@ export const ServicesMenu: React.FC<ServicesMenuProps> = ({
           ))}
         </div>
 
-        {/* View All Catalogue Banner Button */}
+        {/* View All Button if filtered */}
         {activeCategory !== 'ALL' && (
           <div className="mt-8 text-center">
             <button
@@ -115,24 +132,24 @@ export const ServicesMenu: React.FC<ServicesMenuProps> = ({
               className="btn-outline-gold px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase inline-flex items-center gap-2 cursor-pointer shadow-md"
             >
               <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
-              <span>View All {servicesData.length} Services & Packages</span>
+              <span>Explore Complete Menu ({servicesData.length} Services)</span>
             </button>
           </div>
         )}
 
         {/* Bottom Booking Notice */}
-        <div className="mt-12 sm:mt-16 p-5 sm:p-6 rounded-2xl bg-[#14141c]/90 border border-[#d4af37]/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        <div className="mt-12 sm:mt-16 p-5 sm:p-7 rounded-3xl bg-gradient-to-r from-[#161622] via-[#14141c] to-[#121218] border border-[#d4af37]/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left shadow-2xl">
           <div>
             <h4 className="text-sm sm:text-base font-display font-bold text-[#f7e7ce]">
-              Require a Custom Combination or Group Bridal Package?
+              Require Custom Bridal Packages or Destination Wedding Styling?
             </h4>
             <p className="text-xs text-[#a09d96] mt-0.5">
-              We cater to customized family packages, destination weddings, and full-wedding day bridal styling.
+              We provide tailored packages for brides, family groups, and on-venue destination services across Assam.
             </p>
           </div>
           <button
             onClick={() => onBookService(servicesData[0])}
-            className="btn-outline-gold px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs font-bold tracking-widest uppercase flex items-center gap-2 cursor-pointer flex-shrink-0"
+            className="btn-outline-gold px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs font-bold tracking-widest uppercase flex items-center gap-2 cursor-pointer flex-shrink-0 active:scale-95"
           >
             <Calendar className="w-4 h-4 text-[#d4af37]" />
             <span>CUSTOM ENQUIRY</span>

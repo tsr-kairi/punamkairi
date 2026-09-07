@@ -3,7 +3,6 @@ import { BrandReveal } from './components/common/BrandReveal';
 import { Navbar } from './components/layout/Navbar';
 import { Hero } from './components/sections/Hero';
 import { StatsSection } from './components/sections/StatsSection';
-import { AboutArtist } from './components/sections/AboutArtist';
 import { ServicesMenu } from './components/sections/ServicesMenu';
 import { PortfolioSection } from './components/sections/PortfolioSection';
 import { SkillsSection } from './components/sections/SkillsSection';
@@ -16,6 +15,7 @@ import { BookingModal } from './components/booking/BookingModal';
 import { FloatingWhatsApp } from './components/common/FloatingWhatsApp';
 import { MobileBottomBar } from './components/common/MobileBottomBar';
 import { DigitalMenuQuickView } from './components/views/DigitalMenuQuickView';
+import { ArtistProfileView } from './components/views/ArtistProfileView';
 import { FestiveTopBanner } from './components/offers/FestiveTopBanner';
 import { FestiveFloatingBadge } from './components/offers/FestiveFloatingBadge';
 import { FestiveOffersModal } from './components/offers/FestiveOffersModal';
@@ -23,19 +23,21 @@ import type { ServiceCategory, ServiceItem } from './data/services';
 
 export function App() {
   const [showReveal, setShowReveal] = useState(true);
-  const [currentView, setCurrentView] = useState<'full' | 'menu'>('full');
+  const [currentView, setCurrentView] = useState<'full' | 'menu' | 'profile'>('full');
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [offersModalOpen, setOffersModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<ServiceItem | string | null>(null);
   const [activeCategory, setActiveCategory] = useState<ServiceCategory | 'ALL'>('BRIDAL');
 
-  // Detect URL parameter (e.g. ?view=menu or ?view=services or ?offer=durga-puja) on load
+  // Detect URL parameter (e.g. ?view=menu or ?view=profile or ?offer=durga-puja) on load
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       const viewParam = params.get('view');
       if (viewParam === 'menu' || viewParam === 'services') {
         setCurrentView('menu');
+      } else if (viewParam === 'profile' || viewParam === 'artist' || viewParam === 'about') {
+        setCurrentView('profile');
       }
       if (params.get('offer') === 'durga-puja') {
         setOffersModalOpen(true);
@@ -55,6 +57,11 @@ export function App() {
 
   const handleSwitchToMenu = () => {
     setCurrentView('menu');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSwitchToProfile = () => {
+    setCurrentView('profile');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -80,8 +87,13 @@ export function App() {
       {/* Durga Puja Top Announcement Banner */}
       <FestiveTopBanner onOpenOffersModal={() => setOffersModalOpen(true)} />
 
-      {/* Conditional Rendering: Focused Digital Menu View vs Full Website */}
-      {currentView === 'menu' ? (
+      {/* Conditional Rendering: Focused Views vs Full Website */}
+      {currentView === 'profile' ? (
+        <ArtistProfileView
+          onBackToHome={handleSwitchToFullSite}
+          onOpenBooking={() => handleOpenBooking()}
+        />
+      ) : currentView === 'menu' ? (
         <DigitalMenuQuickView
           onSelectServiceToBook={(service) => handleOpenBooking(service)}
           onSwitchToFullSite={handleSwitchToFullSite}
@@ -93,6 +105,7 @@ export function App() {
           <Navbar
             onOpenBooking={() => handleOpenBooking()}
             onOpenMenuQuickView={handleSwitchToMenu}
+            onOpenProfile={handleSwitchToProfile}
           />
 
           {/* Main Content Sections */}
@@ -108,10 +121,7 @@ export function App() {
             {/* 2. Key Pillars & Verified Metrics */}
             <StatsSection />
 
-            {/* 3. Meet the Artist: Mrs. Punam Kairi */}
-            <AboutArtist onOpenBooking={() => handleOpenBooking()} />
-
-            {/* 4. Digital Artistry Services Menu */}
+            {/* 3. Digital Artistry Services Menu (Redesigned Creamy Style) */}
             <ServicesMenu
               activeCategory={activeCategory}
               onCategoryChange={setActiveCategory}

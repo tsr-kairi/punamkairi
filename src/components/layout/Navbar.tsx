@@ -7,9 +7,14 @@ import { getPhoneCallUrl, getGeneralWhatsAppUrl } from '../../utils/whatsapp';
 interface NavbarProps {
   onOpenBooking: () => void;
   onOpenMenuQuickView?: () => void;
+  onOpenProfile?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenMenuQuickView }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  onOpenBooking,
+  onOpenMenuQuickView,
+  onOpenProfile
+}) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -37,7 +42,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenMenuQuickVi
 
   // Clean, essential navigation links for desktop
   const desktopNavLinks = [
-    { label: 'About', href: '#about' },
     { label: 'Services', href: '#services' },
     { label: 'Portfolio', href: '#portfolio' },
     { label: 'Artistry', href: '#artistry' },
@@ -47,7 +51,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenMenuQuickVi
 
   const mobileNavLinks = [
     { label: 'Home', href: '#hero' },
-    { label: 'Meet Punam (About)', href: '#about' },
     { label: 'Services & Packages', href: '#services' },
     { label: 'Portfolio Transformations', href: '#portfolio' },
     { label: 'Signature Artistry', href: '#artistry' },
@@ -64,12 +67,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenMenuQuickVi
             : 'bg-[#0a0a0c]/95 backdrop-blur-md py-3 sm:py-4 border-b border-[#d4af37]/15'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-4">
           
           {/* Brand Logo & Title (Left) */}
           <a
             href="#hero"
-            className="flex items-center gap-2.5 sm:gap-3 group focus:outline-none flex-shrink-0"
+            className="flex items-center gap-2 sm:gap-3 group focus:outline-none flex-shrink-0"
           >
             <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full p-0.5 border border-[#d4af37]/60 group-hover:border-[#d4af37] transition-all bg-[#121216] flex items-center justify-center overflow-hidden shadow-md flex-shrink-0">
               <img
@@ -101,8 +104,34 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenMenuQuickVi
             ))}
           </nav>
 
-          {/* Desktop Right Action Area (Right - Clean & Uncluttered) */}
+          {/* Desktop Right Action Area */}
           <div className="hidden lg:flex items-center gap-2.5 xl:gap-3 flex-shrink-0">
+            {/* Artist Profile Avatar Button */}
+            {onOpenProfile && (
+              <button
+                onClick={onOpenProfile}
+                className="flex items-center gap-2 p-1 pl-1.5 pr-3 rounded-full bg-[#181822] hover:bg-[#222230] border border-[#d4af37]/45 hover:border-[#d4af37] transition-all cursor-pointer shadow-md group active:scale-95 flex-shrink-0"
+                title="View Mrs. Punam Kairi's Official Profile"
+              >
+                <div className="relative w-7 h-7 rounded-full overflow-hidden border border-[#d4af37] flex-shrink-0 bg-black">
+                  <img
+                    src={siteConfig.branding.artistPortraitSquare}
+                    alt="Punam Kairi"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-500 border border-black" />
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="text-[10px] xl:text-[11px] font-bold text-[#f7e7ce] group-hover:text-white leading-none">
+                    Profile
+                  </span>
+                  <span className="text-[7.5px] xl:text-[8.5px] text-[#d4af37] font-semibold tracking-wider uppercase leading-none mt-0.5">
+                    Artist
+                  </span>
+                </div>
+              </button>
+            )}
+
             {onOpenMenuQuickView && (
               <button
                 onClick={onOpenMenuQuickView}
@@ -135,17 +164,34 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenMenuQuickVi
           </div>
 
           {/* Mobile Right Controls (<1024px) */}
-          <div className="flex lg:hidden items-center gap-2 flex-shrink-0">
+          <div className="flex lg:hidden items-center gap-1.5 sm:gap-2 flex-shrink-0">
+            {/* Mobile Artist Profile Icon Button */}
+            {onOpenProfile && (
+              <button
+                onClick={onOpenProfile}
+                className="relative w-8 h-8 rounded-full p-0.5 border border-[#d4af37]/70 bg-[#161622] flex items-center justify-center overflow-hidden shadow-md flex-shrink-0 cursor-pointer active:scale-95"
+                title="View Artist Profile"
+                aria-label="View Artist Profile"
+              >
+                <img
+                  src={siteConfig.branding.artistPortraitSquare}
+                  alt="Punam Kairi"
+                  className="w-full h-full object-cover rounded-full"
+                />
+                <div className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-500 border border-black" />
+              </button>
+            )}
+
             <button
               onClick={onOpenBooking}
-              className="btn-gold px-3.5 py-1.5 rounded-full text-[11px] font-bold tracking-wider uppercase flex items-center gap-1 shadow-md cursor-pointer whitespace-nowrap"
+              className="btn-gold px-3 sm:px-3.5 py-1.5 rounded-full text-[10.5px] sm:text-[11px] font-bold tracking-wider uppercase flex items-center gap-1 shadow-md cursor-pointer whitespace-nowrap"
             >
               <Calendar className="w-3 h-3" />
               <span>BOOK</span>
             </button>
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="p-2 rounded-xl bg-[#14141c] border border-[#d4af37]/30 text-[#f7e7ce] active:bg-[#20202c] transition-colors"
+              className="p-1.5 sm:p-2 rounded-xl bg-[#14141c] border border-[#d4af37]/30 text-[#f7e7ce] active:bg-[#20202c] transition-colors"
               aria-label="Open Navigation Menu"
             >
               <Menu className="w-5 h-5 text-[#d4af37]" />
@@ -203,6 +249,32 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenMenuQuickVi
               }}
               className="flex flex-col space-y-2 py-6"
             >
+              {/* Profile Shortcut Button in Mobile Drawer */}
+              {onOpenProfile && (
+                <button
+                  onClick={() => {
+                    closeMenu();
+                    onOpenProfile();
+                  }}
+                  className="w-full text-left p-3.5 rounded-2xl bg-[#1a1a24] border border-[#d4af37]/50 flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#f7e7ce] mb-1 shadow-lg cursor-pointer"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full overflow-hidden border border-[#d4af37] flex-shrink-0">
+                      <img
+                        src={siteConfig.branding.artistPortraitSquare}
+                        alt="Punam Kairi"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <span className="block text-white">Mrs. Punam Kairi Profile</span>
+                      <span className="text-[9px] text-[#d4af37] font-normal lowercase tracking-normal">Lead Artist • Qualifications & Bio</span>
+                    </div>
+                  </div>
+                  <span className="text-[#d4af37]">→</span>
+                </button>
+              )}
+
               {onOpenMenuQuickView && (
                 <button
                   onClick={() => {
