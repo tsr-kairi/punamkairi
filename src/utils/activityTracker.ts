@@ -6,7 +6,34 @@ export interface RealCustomerActivity {
 }
 
 const STORAGE_KEY = 'pk_real_customer_bookings_v2';
+const TOTAL_COUNT_KEY = 'pk_total_booking_count_v2';
 const ACTIVITY_UPDATE_EVENT = 'pk_real_activity_updated';
+const BASELINE_TOTAL_BOOKINGS = 158;
+
+export function getTotalBookingCount(): number {
+  try {
+    const raw = localStorage.getItem(TOTAL_COUNT_KEY);
+    if (!raw) {
+      localStorage.setItem(TOTAL_COUNT_KEY, String(BASELINE_TOTAL_BOOKINGS));
+      return BASELINE_TOTAL_BOOKINGS;
+    }
+    const parsed = parseInt(raw, 10);
+    return isNaN(parsed) ? BASELINE_TOTAL_BOOKINGS : parsed;
+  } catch {
+    return BASELINE_TOTAL_BOOKINGS;
+  }
+}
+
+export function incrementTotalBookingCount(): number {
+  try {
+    const current = getTotalBookingCount();
+    const updated = current + 1;
+    localStorage.setItem(TOTAL_COUNT_KEY, String(updated));
+    return updated;
+  } catch {
+    return BASELINE_TOTAL_BOOKINGS + 1;
+  }
+}
 
 // Empty by default - ONLY real customer submissions will be shown
 export function getRealActivities(): RealCustomerActivity[] {
@@ -48,8 +75,13 @@ export function recordRealCustomerActivity(
     const updated = [newActivity, ...current.filter((c) => c.id !== newActivity.id)].slice(0, 25);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
 
+    // Increment total bookings counter
+    const newTotal = incrementTotalBookingCount();
+
     // Dispatch global event for instant UI sync across all open tabs/components
-    window.dispatchEvent(new CustomEvent(ACTIVITY_UPDATE_EVENT, { detail: newActivity }));
+    window.dispatchEvent(new CustomEvent(ACTIVITY_UPDATE_EVENT, { 
+      detail: { activity: newActivity, totalBookings: newTotal } 
+    }));
   } catch (err) {
     console.warn('Could not store real activity:', err);
   }
