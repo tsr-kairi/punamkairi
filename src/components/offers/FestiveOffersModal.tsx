@@ -123,12 +123,12 @@ export const FestiveOffersModal: React.FC<FestiveOffersModalProps> = ({ isOpen, 
             </p>
           </div>
 
-          {/* Offers Cards Grid: Exactly 2 cards per row on Mobile & Desktop */}
-          <div className="grid grid-cols-2 lg:grid-cols-2 gap-2.5 sm:gap-4 relative z-10">
+          {/* Offers Cards Grid: 1 column on mobile for full spacious luxury, 2 columns on tablet/desktop */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 relative z-10">
             {durgaPujaFestiveOffers.offers.map((offer) => (
               <div
                 key={offer.id}
-                className={`rounded-xl sm:rounded-2xl border flex flex-col justify-between transition-all duration-300 relative overflow-hidden group ${
+                className={`rounded-2xl border flex flex-col justify-between transition-all duration-300 relative overflow-hidden group ${
                   offer.popular
                     ? 'bg-gradient-to-b from-[#1f1019] via-[#16111e] to-[#0e0c14] border-[#d4af37]/65 shadow-xl shadow-rose-950/20'
                     : 'bg-gradient-to-b from-[#17121c] to-[#0f0e16] border-[#2f2a3a] hover:border-[#d4af37]/50'
@@ -136,77 +136,80 @@ export const FestiveOffersModal: React.FC<FestiveOffersModalProps> = ({ isOpen, 
               >
                 {/* Embedded Durga Puja Card Background Watermark */}
                 <div className="absolute -right-4 -bottom-6 text-[#d4af37]/[0.07] group-hover:text-[#d4af37]/[0.12] transition-colors pointer-events-none">
-                  <DurgaWatermarkSvg className="w-28 h-28 sm:w-36 sm:h-36" />
+                  <DurgaWatermarkSvg className="w-32 h-32 sm:w-40 sm:h-40" />
                 </div>
 
                 <div>
                   {/* Service Image Header with Overlaid Badges */}
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
+                  <div className="relative h-36 sm:h-44 w-full overflow-hidden bg-black/40">
                     <img
                       src={offer.image}
                       alt={offer.title}
                       className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0e0c14] via-black/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0e0c14] via-black/25 to-transparent" />
 
-                    {/* Top Badges */}
-                    <div className="absolute top-1.5 left-1.5 right-1.5 flex items-center justify-between gap-1">
-                      <span className="px-1.5 py-0.5 rounded bg-black/80 backdrop-blur-md text-[#f3e5ab] text-[8px] sm:text-[10px] font-bold uppercase tracking-wider border border-[#d4af37]/40 truncate max-w-[65%]">
+                    {/* Top Overlaid Badges */}
+                    <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between gap-2">
+                      <span className="px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md text-[#f3e5ab] text-[10px] sm:text-xs font-bold uppercase tracking-wider border border-[#d4af37]/40 truncate shadow">
                         {offer.badge}
                       </span>
-                      <span className="px-1.5 py-0.5 rounded bg-[#d4af37] text-black text-[8px] sm:text-[10px] font-extrabold uppercase tracking-wider shadow">
+                      <span className="px-2.5 py-1 rounded-full bg-[#d4af37] text-black text-[10px] sm:text-xs font-extrabold uppercase tracking-wider shadow-lg">
                         {offer.savingsBadge}
                       </span>
                     </div>
                   </div>
 
-                  {/* Card Content (Compact & Clean) */}
-                  <div className="p-2.5 sm:p-4">
-                    {/* Offer Title */}
-                    <h3 className="text-[11px] sm:text-base font-display font-bold text-[#f7e7ce] leading-tight line-clamp-2 min-h-[1.8rem] sm:min-h-[2.5rem]">
+                  {/* Card Body Content */}
+                  <div className="p-4 sm:p-5">
+                    {/* Offer Title & Tagline */}
+                    <h3 className="text-base sm:text-lg font-display font-bold text-[#f7e7ce] leading-snug">
                       {offer.title}
                     </h3>
+                    <p className="text-xs text-[#d4af37] font-serif-luxury italic mt-0.5">
+                      {offer.tagline}
+                    </p>
                     
                     {/* Highlight Box */}
-                    <div className="my-1.5 sm:my-2 p-1.5 sm:p-2 rounded-lg bg-[#d4af37]/15 border border-[#d4af37]/40 flex items-center gap-1.5">
-                      <Sparkles className="w-3 h-3 text-[#d4af37] flex-shrink-0" />
-                      <span className="text-[9px] sm:text-xs font-bold text-[#fceade] leading-tight line-clamp-1">
+                    <div className="my-3 p-2.5 rounded-xl bg-[#d4af37]/15 border border-[#d4af37]/40 flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-[#d4af37] flex-shrink-0" />
+                      <span className="text-xs font-bold text-[#fceade] uppercase tracking-wide">
                         {offer.discountHighlight}
                       </span>
                     </div>
 
                     {/* Key Perks Checklist */}
-                    <div className="space-y-1 mb-2.5">
+                    <div className="space-y-1.5 mb-2">
                       {offer.includedPerks.map((perk, pIdx) => (
-                        <div key={pIdx} className="flex items-center gap-1.5 text-[9px] sm:text-xs text-[#cfccc4]">
-                          <Check className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-[#d4af37] flex-shrink-0" />
-                          <span className="truncate">{perk}</span>
+                        <div key={pIdx} className="flex items-center gap-2 text-xs text-[#cfccc4]">
+                          <Check className="w-3.5 h-3.5 text-[#d4af37] flex-shrink-0" />
+                          <span>{perk}</span>
                         </div>
                       ))}
                     </div>
                   </div>
                 </div>
 
-                {/* Card Footer: Code + WhatsApp Claim Button */}
-                <div className="p-2.5 sm:p-4 pt-0">
-                  <div className="flex items-center justify-between text-[8px] sm:text-[10px] text-[#a09d96] font-mono mb-2 px-0.5">
-                    <div className="flex items-center gap-1 text-[#d4af37]">
-                      <Tag className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                      <span className="truncate">{offer.code}</span>
+                {/* Card Footer: Code + Single-line Full-width WhatsApp CTA */}
+                <div className="p-4 sm:p-5 pt-0">
+                  <div className="flex items-center justify-between text-xs text-[#a09d96] font-mono mb-2.5 px-0.5">
+                    <div className="flex items-center gap-1.5 text-[#d4af37]">
+                      <Tag className="w-3.5 h-3.5" />
+                      <span className="font-semibold">CODE: {offer.code}</span>
                     </div>
-                    <div className="flex items-center gap-1 text-[#a09d96] hidden sm:flex">
-                      <Clock className="w-3 h-3" />
+                    <div className="flex items-center gap-1.5 text-[#a09d96]">
+                      <Clock className="w-3.5 h-3.5" />
                       <span>{offer.validTill}</span>
                     </div>
                   </div>
 
                   <button
                     onClick={() => handleClaimOffer(offer)}
-                    className="w-full btn-gold py-2 sm:py-2.5 px-2 rounded-xl text-[10px] sm:text-xs font-bold tracking-wider uppercase flex items-center justify-center gap-1.5 shadow-lg active:scale-95 transition-all cursor-pointer"
+                    className="w-full btn-gold py-3 px-4 rounded-xl text-xs sm:text-sm font-bold tracking-wider uppercase flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all cursor-pointer whitespace-nowrap"
                   >
-                    <MessageCircle className="w-3.5 h-3.5 text-[#0a0a0c] flex-shrink-0" />
-                    <span className="truncate">CLAIM ON WHATSAPP</span>
+                    <MessageCircle className="w-4 h-4 text-[#0a0a0c] flex-shrink-0" />
+                    <span>CLAIM DEAL ON WHATSAPP</span>
                   </button>
                 </div>
 
@@ -215,7 +218,7 @@ export const FestiveOffersModal: React.FC<FestiveOffersModalProps> = ({ isOpen, 
           </div>
 
           {/* Bottom Direct Confirmation Notice */}
-          <div className="mt-3.5 sm:mt-5 p-2.5 sm:p-3.5 rounded-xl bg-[#14141d] border border-[#2a2824] flex items-center gap-2.5 text-[10px] sm:text-xs text-[#a09d96] relative z-10">
+          <div className="mt-4 sm:mt-6 p-3.5 sm:p-4 rounded-2xl bg-[#14141d] border border-[#2a2824] flex items-center gap-3 text-xs text-[#a09d96] relative z-10">
             <ShieldCheck className="w-4 h-4 text-[#d4af37] flex-shrink-0" />
             <div className="leading-tight">
               Claim directly on WhatsApp with <strong className="text-[#f7e7ce]">Mrs. Punam Kairi (+91 6003756297)</strong>. Limited slots for auspicious Puja dates.
