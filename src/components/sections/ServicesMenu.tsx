@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Layers, Sparkles } from 'lucide-react';
+import { Calendar, Sparkles } from 'lucide-react';
 import { servicesData, serviceCategories } from '../../data/services';
 import type { ServiceCategory, ServiceItem } from '../../data/services';
 import { SectionHeader } from '../common/SectionHeader';

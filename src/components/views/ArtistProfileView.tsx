@@ -13,12 +13,11 @@ import {
   Star,
   ExternalLink,
   ShieldCheck,
-  Clock,
-  Instagram,
-  Facebook
+  Clock
 } from 'lucide-react';
 import { siteConfig } from '../../data/siteConfig';
-import { portfolioItems } from '../../data/portfolio';
+import { portfolioData } from '../../data/portfolio';
+import { InstagramIcon, FacebookIcon } from '../common/SocialIcons';
 import { getPhoneCallUrl, getGeneralWhatsAppUrl } from '../../utils/whatsapp';
 
 interface ArtistProfileViewProps {
@@ -79,7 +78,7 @@ export const ArtistProfileView: React.FC<ArtistProfileViewProps> = ({
     'Hospital-Grade Clean Sanitization'
   ];
 
-  const featuredWorks = portfolioItems.slice(0, 6);
+  const featuredWorks = portfolioData.slice(0, 6);
 
   return (
     <div className="min-h-screen bg-[#0a0a0c] text-[#f5f2ea] selection:bg-[#d4af37]/30 pb-24">
@@ -369,7 +368,7 @@ export const ArtistProfileView: React.FC<ArtistProfileViewProps> = ({
                     onClick={onBackToHome}
                   >
                     <img
-                      src={item.image}
+                      src={item.imageUrl}
                       alt={item.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
@@ -397,7 +396,7 @@ export const ArtistProfileView: React.FC<ArtistProfileViewProps> = ({
                   className="p-3 rounded-full bg-[#181824] hover:bg-[#252538] text-[#f7e7ce] border border-[#d4af37]/30 transition-all hover:scale-105"
                   title="Follow on Instagram"
                 >
-                  <Instagram className="w-5 h-5 text-[#d4af37]" />
+                  <InstagramIcon className="w-5 h-5 text-[#d4af37]" />
                 </a>
                 <a
                   href="https://www.facebook.com/punamkairiofficial"
@@ -406,7 +405,7 @@ export const ArtistProfileView: React.FC<ArtistProfileViewProps> = ({
                   className="p-3 rounded-full bg-[#181824] hover:bg-[#252538] text-[#f7e7ce] border border-[#d4af37]/30 transition-all hover:scale-105"
                   title="Follow on Facebook"
                 >
-                  <Facebook className="w-5 h-5 text-[#d4af37]" />
+                  <FacebookIcon className="w-5 h-5 text-[#d4af37]" />
                 </a>
                 <a
                   href={getGeneralWhatsAppUrl()}
