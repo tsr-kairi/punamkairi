@@ -4,13 +4,16 @@ import { skillsData } from '../../data/skills';
 import { SectionHeader } from '../common/SectionHeader';
 
 export const SkillsSection: React.FC = () => {
-  const signatureSkills = [
+  const row1Skills = [
     'Royal Bridal Artistry',
     'HD Camera-Ready Base',
     'Airbrush Porcelain Technique',
     'Precision Cut-Crease',
     'Deep Velvet Smokey Eyes',
-    'Indian Undertone Formulation',
+    'Indian Undertone Formulation'
+  ];
+
+  const row2Skills = [
     'Color Correction & Concealing',
     'Micro-Contouring & Sculpting',
     'Mink & Silk Lash Architecture',
@@ -32,17 +35,37 @@ export const SkillsSection: React.FC = () => {
           subtitle="A harmonious symphony of classical precision and modern high-fashion techniques."
         />
 
-        {/* Cinematic Skills Cloud / Chips */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5 max-w-4xl mx-auto mb-16">
-          {signatureSkills.map((skill, idx) => (
-            <div
-              key={idx}
-              className="px-4 py-2 rounded-full bg-[#14141a]/90 border border-[#d4af37]/25 hover:border-[#d4af37] text-[#f7e7ce] hover:text-[#f3e5ab] text-xs sm:text-sm font-medium tracking-wide transition-all hover:scale-105 shadow-md flex items-center gap-2 group cursor-default"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#d4af37]/60 group-hover:bg-[#d4af37] transition-colors" />
-              <span>{skill}</span>
-            </div>
-          ))}
+        {/* Infinite Horizontal Auto-Scrolling Marquee Ribbons (Mobile & Desktop) */}
+        <div className="relative w-full overflow-hidden mb-12 sm:mb-16 space-y-2.5 sm:space-y-3.5 py-1">
+          {/* Left and Right Fade Gradients */}
+          <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-28 bg-gradient-to-r from-[#09090c] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-28 bg-gradient-to-l from-[#09090c] to-transparent z-10 pointer-events-none" />
+
+          {/* Ribbon Row 1: Right to Left */}
+          <div className="flex gap-2 sm:gap-3 w-max animate-marquee hover:[animation-play-state:paused] cursor-grab select-none">
+            {[...row1Skills, ...row1Skills, ...row1Skills, ...row1Skills].map((skill, idx) => (
+              <div
+                key={`r1-${idx}`}
+                className="px-3.5 sm:px-5 py-1.5 sm:py-2.5 rounded-full bg-[#14141a]/95 border border-[#d4af37]/35 hover:border-[#d4af37] text-[#f7e7ce] hover:text-[#f3e5ab] text-xs sm:text-sm font-medium tracking-wide shadow-md flex items-center gap-2 whitespace-nowrap flex-shrink-0 transition-colors"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#d4af37]" />
+                <span>{skill}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Ribbon Row 2: Left to Right */}
+          <div className="flex gap-2 sm:gap-3 w-max animate-marquee-reverse hover:[animation-play-state:paused] cursor-grab select-none">
+            {[...row2Skills, ...row2Skills, ...row2Skills, ...row2Skills].map((skill, idx) => (
+              <div
+                key={`r2-${idx}`}
+                className="px-3.5 sm:px-5 py-1.5 sm:py-2.5 rounded-full bg-[#14141a]/95 border border-[#d4af37]/35 hover:border-[#d4af37] text-[#f7e7ce] hover:text-[#f3e5ab] text-xs sm:text-sm font-medium tracking-wide shadow-md flex items-center gap-2 whitespace-nowrap flex-shrink-0 transition-colors"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#d4af37]" />
+                <span>{skill}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Detailed Technique Pillars Tabs / Cards */}
