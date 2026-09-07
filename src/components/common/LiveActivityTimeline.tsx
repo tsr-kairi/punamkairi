@@ -34,14 +34,6 @@ export const LiveActivityTimeline: React.FC = () => {
     };
   }, []);
 
-  // Repeat array enough times to continuously fill widescreen desktop & mobile smoothly
-  const repeatMultiplier = activities.length > 0
-    ? Math.max(4, Math.ceil(12 / activities.length))
-    : 1;
-  const displayItems = activities.length > 0
-    ? Array(repeatMultiplier).fill(activities).flat()
-    : [];
-
   return (
     <section 
       aria-label="Real customer bookings activity timeline" 
@@ -75,19 +67,48 @@ export const LiveActivityTimeline: React.FC = () => {
           </div>
         </div>
 
-        {/* Continuous Horizontal Infinite Marquee Carousel (Left to Right Flow, Read-Only) */}
+        {/* Center Activity Display Area */}
         <div className="relative flex-1 overflow-hidden min-h-[36px] flex items-center">
           
           {/* Left and Right Smooth Fade Gradients */}
           <div className="absolute left-0 inset-y-0 w-8 sm:w-16 bg-gradient-to-r from-[#0c0b11] to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 inset-y-0 w-8 sm:w-16 bg-gradient-to-l from-[#0c0b11] to-transparent z-10 pointer-events-none" />
 
-          {/* Scrolling Ribbon Container */}
-          <div className="animate-marquee-reverse flex items-center gap-3 sm:gap-4 py-0.5 w-max hover:[animation-play-state:paused]">
-            {activities.length > 0 ? (
-              displayItems.map((item, idx) => (
+          {activities.length === 1 ? (
+            /* Single Real Booking: Shown exactly once, perfectly positioned */
+            <div className="flex items-center px-2 py-0.5">
+              <div className="flex items-center gap-2.5 sm:gap-3 px-3.5 py-1.5 sm:py-2 rounded-xl border border-[#2f2b38] bg-gradient-to-r from-[#14121a] to-[#0f0e15] backdrop-blur-md shadow-sm">
+                {/* User Initials Badge */}
+                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#1e1c27] border border-[#d4af37]/40 text-[#f3e5ab] flex items-center justify-center font-bold text-[10px] sm:text-xs flex-shrink-0">
+                  {activities[0].customerName.charAt(0).toUpperCase()}
+                </div>
+
+                {/* Real Customer Name & Real Address */}
+                <div className="flex flex-col text-left">
+                  <span className="text-xs sm:text-sm font-bold text-[#f7e7ce] flex items-center gap-1 leading-tight">
+                    {activities[0].customerName}
+                    <UserCheck className="w-3 h-3 text-emerald-400 inline flex-shrink-0" />
+                  </span>
+                  
+                  <span className="text-[10px] sm:text-xs text-[#a09d96] flex items-center gap-1 mt-0.5 leading-tight">
+                    <MapPin className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#d4af37] flex-shrink-0" />
+                    <span className="truncate max-w-[200px] sm:max-w-[320px]">{activities[0].location}</span>
+                  </span>
+                </div>
+
+                {/* Real Timestamp Elapsed */}
+                <div className="pl-2 border-l border-white/10 flex items-center gap-1 text-[10px] sm:text-xs text-[#d4af37] font-mono whitespace-nowrap">
+                  <Sparkles className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#d4af37]" />
+                  <span>{formatTimeAgo(activities[0].timestamp)}</span>
+                </div>
+              </div>
+            </div>
+          ) : activities.length > 1 ? (
+            /* Multiple Real Bookings: Scrolling Ribbon of distinct bookings */
+            <div className="animate-marquee-reverse flex items-center gap-3 sm:gap-4 py-0.5 w-max hover:[animation-play-state:paused]">
+              {activities.map((item) => (
                 <div
-                  key={`${item.id}-${idx}`}
+                  key={item.id}
                   className="flex items-center gap-2.5 sm:gap-3 px-3.5 py-1.5 sm:py-2 rounded-xl border border-[#2f2b38] bg-gradient-to-r from-[#14121a] to-[#0f0e15] backdrop-blur-md shadow-sm flex-shrink-0 min-w-max"
                 >
                   {/* User Initials Badge */}
@@ -114,14 +135,14 @@ export const LiveActivityTimeline: React.FC = () => {
                     <span>{formatTimeAgo(item.timestamp)}</span>
                   </div>
                 </div>
-              ))
-            ) : (
-              <div className="flex items-center gap-2 text-xs text-[#a09d96] py-1 px-3">
-                <Sparkles className="w-3.5 h-3.5 text-[#d4af37] animate-pulse" />
-                <span>Real customer bookings and appointment confirmations will appear here live...</span>
-              </div>
-            )}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 text-xs text-[#a09d96] py-1 px-3">
+              <Sparkles className="w-3.5 h-3.5 text-[#d4af37] animate-pulse" />
+              <span>Real customer bookings and appointment confirmations will appear here live...</span>
+            </div>
+          )}
 
         </div>
 

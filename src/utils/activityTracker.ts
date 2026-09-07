@@ -8,17 +8,29 @@ export interface RealCustomerActivity {
 const STORAGE_KEY = 'pk_real_customer_bookings_v2';
 const ACTIVITY_UPDATE_EVENT = 'pk_real_activity_updated';
 
-// Returns ONLY real customer submissions from actual bookings (default: [])
+// Returns ONLY unique real customer submissions (deduplicated by customer name + location)
 export function getRealActivities(): RealCustomerActivity[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed)) {
-      return parsed.filter(
+      const valid = parsed.filter(
         (item): item is RealCustomerActivity =>
           Boolean(item && typeof item.customerName === 'string' && item.customerName.trim().length > 0)
       );
+
+      // Deduplicate by customer name and location so 1 customer is counted and shown strictly once
+      const seen = new Set<string>();
+      const uniqueList: RealCustomerActivity[] = [];
+      for (const item of valid) {
+        const key = `${item.customerName.trim().toLowerCase()}::${item.location.trim().toLowerCase()}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          uniqueList.push(item);
+        }
+      }
+      return uniqueList;
     }
     return [];
   } catch {
@@ -26,7 +38,7 @@ export function getRealActivities(): RealCustomerActivity[] {
   }
 }
 
-// Exactly matches actual count: 0 if none, 1 if 1, 2 if 2, etc.
+// Exactly matches unique count: 1 customer = 1 count, 2 customers = 2 count
 export function getTotalBookingCount(): number {
   return getRealActivities().length;
 }
@@ -40,28 +52,48 @@ export function recordRealCustomerActivity(
 
   if (!cleanName) return null;
 
-  const newActivity: RealCustomerActivity = {
-    id: `book-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
-    customerName: cleanName,
-    location: cleanLocation,
-    timestamp: Date.now()
-  };
-
   try {
     const current = getRealActivities();
-    // Keep latest activities with new one at top
-    const updated = [newActivity, ...current.filter((c) => c.id !== newActivity.id)].slice(0, 30);
+    
+    // Check if customer already exists (case-insensitive)
+    const existingIndex = current.findIndex(
+      (item) => item.customerName.toLowerCase() === cleanName.toLowerCase()
+    );
+
+    let updated: RealCustomerActivity[];
+    let entry: RealCustomerActivity;
+
+    if (existingIndex >= 0) {
+      // Update existing entry's timestamp instead of creating a duplicate
+      entry = {
+        ...current[existingIndex],
+        location: cleanLocation,
+        timestamp: Date.now()
+      };
+      updated = [entry, ...current.filter((_, idx) => idx !== existingIndex)];
+    } else {
+      // New unique customer
+      entry = {
+        id: `book-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+        customerName: cleanName,
+        location: cleanLocation,
+        timestamp: Date.now()
+      };
+      updated = [entry, ...current].slice(0, 30);
+    }
+
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
 
-    // Dispatch global event for instant UI sync across all open tabs & components
+    // Dispatch global event for instant UI sync
     window.dispatchEvent(new CustomEvent(ACTIVITY_UPDATE_EVENT, { 
-      detail: { activity: newActivity, totalBookings: updated.length } 
+      detail: { activity: entry, totalBookings: updated.length } 
     }));
+
+    return entry;
   } catch (err) {
     console.warn('Could not store real activity:', err);
+    return null;
   }
-
-  return newActivity;
 }
 
 export function subscribeToRealActivities(
