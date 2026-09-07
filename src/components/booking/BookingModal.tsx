@@ -3,6 +3,7 @@ import { X, Calendar, User, Phone, MapPin, Sparkles, AlertCircle, ArrowRight } f
 import { servicesData } from '../../data/services';
 import type { ServiceItem } from '../../data/services';
 import type { BookingFormData } from '../../utils/whatsapp';
+import { recordRealCustomerActivity } from '../../utils/activityTracker';
 import { BookingSummary } from './BookingSummary';
 
 interface BookingModalProps {
@@ -103,6 +104,12 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
+      // Record real customer booking activity immediately
+      try {
+        recordRealCustomerActivity(customerName, customerLocation);
+      } catch {
+        // safe fallback
+      }
       setStep('summary');
     }
   };

@@ -6,36 +6,9 @@ export interface RealCustomerActivity {
 }
 
 const STORAGE_KEY = 'pk_real_customer_bookings_v2';
-const TOTAL_COUNT_KEY = 'pk_total_booking_count_v2';
 const ACTIVITY_UPDATE_EVENT = 'pk_real_activity_updated';
-const BASELINE_TOTAL_BOOKINGS = 158;
 
-export function getTotalBookingCount(): number {
-  try {
-    const raw = localStorage.getItem(TOTAL_COUNT_KEY);
-    if (!raw) {
-      localStorage.setItem(TOTAL_COUNT_KEY, String(BASELINE_TOTAL_BOOKINGS));
-      return BASELINE_TOTAL_BOOKINGS;
-    }
-    const parsed = parseInt(raw, 10);
-    return isNaN(parsed) ? BASELINE_TOTAL_BOOKINGS : parsed;
-  } catch {
-    return BASELINE_TOTAL_BOOKINGS;
-  }
-}
-
-export function incrementTotalBookingCount(): number {
-  try {
-    const current = getTotalBookingCount();
-    const updated = current + 1;
-    localStorage.setItem(TOTAL_COUNT_KEY, String(updated));
-    return updated;
-  } catch {
-    return BASELINE_TOTAL_BOOKINGS + 1;
-  }
-}
-
-// Empty by default - ONLY real customer submissions will be shown
+// Returns ONLY real customer submissions from actual bookings (default: [])
 export function getRealActivities(): RealCustomerActivity[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -53,34 +26,36 @@ export function getRealActivities(): RealCustomerActivity[] {
   }
 }
 
+// Exactly matches actual count: 0 if none, 1 if 1, 2 if 2, etc.
+export function getTotalBookingCount(): number {
+  return getRealActivities().length;
+}
+
 export function recordRealCustomerActivity(
   customerName: string,
   location: string
 ): RealCustomerActivity | null {
   const cleanName = customerName.trim();
-  const cleanLocation = location.trim();
+  const cleanLocation = location.trim() || 'Sribhumi, Assam';
 
   if (!cleanName) return null;
 
   const newActivity: RealCustomerActivity = {
-    id: `rec-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+    id: `book-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
     customerName: cleanName,
-    location: cleanLocation || 'Sribhumi / Assam',
+    location: cleanLocation,
     timestamp: Date.now()
   };
 
   try {
     const current = getRealActivities();
-    // Keep max 25 latest real activities with new one at top
-    const updated = [newActivity, ...current.filter((c) => c.id !== newActivity.id)].slice(0, 25);
+    // Keep latest activities with new one at top
+    const updated = [newActivity, ...current.filter((c) => c.id !== newActivity.id)].slice(0, 30);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
 
-    // Increment total bookings counter
-    const newTotal = incrementTotalBookingCount();
-
-    // Dispatch global event for instant UI sync across all open tabs/components
+    // Dispatch global event for instant UI sync across all open tabs & components
     window.dispatchEvent(new CustomEvent(ACTIVITY_UPDATE_EVENT, { 
-      detail: { activity: newActivity, totalBookings: newTotal } 
+      detail: { activity: newActivity, totalBookings: updated.length } 
     }));
   } catch (err) {
     console.warn('Could not store real activity:', err);
@@ -90,10 +65,11 @@ export function recordRealCustomerActivity(
 }
 
 export function subscribeToRealActivities(
-  callback: (activities: RealCustomerActivity[]) => void
+  callback: (activities: RealCustomerActivity[], totalCount: number) => void
 ): () => void {
   const handler = () => {
-    callback(getRealActivities());
+    const items = getRealActivities();
+    callback(items, items.length);
   };
 
   window.addEventListener(ACTIVITY_UPDATE_EVENT, handler);

@@ -10,20 +10,22 @@ import {
 
 export const LiveActivityTimeline: React.FC = () => {
   const [activities, setActivities] = useState<RealCustomerActivity[]>(() => getRealActivities());
-  const [totalBookings, setTotalBookings] = useState<number>(() => getTotalBookingCount());
+  const [totalCount, setTotalCount] = useState<number>(() => getTotalBookingCount());
   const [, setTick] = useState(0);
 
   // Subscribe to real customer booking updates
   useEffect(() => {
-    const unsubscribe = subscribeToRealActivities((updated) => {
+    const unsubscribe = subscribeToRealActivities((updated, count) => {
       setActivities(updated);
-      setTotalBookings(getTotalBookingCount());
+      setTotalCount(count);
     });
 
     // Update relative time ("2m ago", etc.) every 30 seconds
     const timer = setInterval(() => {
       setTick((prev) => prev + 1);
-      setTotalBookings(getTotalBookingCount());
+      const current = getRealActivities();
+      setActivities(current);
+      setTotalCount(current.length);
     }, 30000);
 
     return () => {
@@ -32,10 +34,13 @@ export const LiveActivityTimeline: React.FC = () => {
     };
   }, []);
 
-  // Double array for continuous seamless infinite looping
-  const displayItems = activities.length < 5
-    ? [...activities, ...activities, ...activities, ...activities]
-    : [...activities, ...activities];
+  // Repeat array enough times to continuously fill widescreen desktop & mobile smoothly
+  const repeatMultiplier = activities.length > 0
+    ? Math.max(4, Math.ceil(12 / activities.length))
+    : 1;
+  const displayItems = activities.length > 0
+    ? Array(repeatMultiplier).fill(activities).flat()
+    : [];
 
   return (
     <section 
@@ -62,28 +67,28 @@ export const LiveActivityTimeline: React.FC = () => {
             </span>
           </div>
 
-          {/* Mobile visible total bookings mini badge */}
+          {/* Mobile visible total bookings exact count badge */}
           <div className="md:hidden inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#181422] border border-[#d4af37]/40 shadow-sm">
             <TrendingUp className="w-3 h-3 text-[#d4af37]" />
             <span className="text-[10px] text-[#cfccc4] font-medium">Total:</span>
-            <span className="text-[11px] font-bold font-mono text-[#f3e5ab]">{totalBookings}+</span>
+            <span className="text-[11px] font-bold font-mono text-[#f3e5ab]">{totalCount}</span>
           </div>
         </div>
 
-        {/* Continuous Horizontal Infinite Marquee Carousel (Left to Right Flow, Non-Clickable) */}
-        <div className="relative flex-1 overflow-hidden">
+        {/* Continuous Horizontal Infinite Marquee Carousel (Left to Right Flow, Read-Only) */}
+        <div className="relative flex-1 overflow-hidden min-h-[36px] flex items-center">
           
           {/* Left and Right Smooth Fade Gradients */}
           <div className="absolute left-0 inset-y-0 w-8 sm:w-16 bg-gradient-to-r from-[#0c0b11] to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 inset-y-0 w-8 sm:w-16 bg-gradient-to-l from-[#0c0b11] to-transparent z-10 pointer-events-none" />
 
-          {/* Scrolling Ribbon Container (Read-Only, Non-Clickable) */}
-          <div className="animate-marquee-reverse flex items-center gap-3 sm:gap-4 py-0.5 w-max pointer-events-none select-none">
+          {/* Scrolling Ribbon Container */}
+          <div className="animate-marquee-reverse flex items-center gap-3 sm:gap-4 py-0.5 w-max hover:[animation-play-state:paused]">
             {activities.length > 0 ? (
               displayItems.map((item, idx) => (
                 <div
                   key={`${item.id}-${idx}`}
-                  className="flex items-center gap-2.5 sm:gap-3 px-3.5 py-1.5 sm:py-2 rounded-xl border border-[#2f2b38] bg-gradient-to-r from-[#14121a] to-[#0f0e15] backdrop-blur-md shadow-sm flex-shrink-0"
+                  className="flex items-center gap-2.5 sm:gap-3 px-3.5 py-1.5 sm:py-2 rounded-xl border border-[#2f2b38] bg-gradient-to-r from-[#14121a] to-[#0f0e15] backdrop-blur-md shadow-sm flex-shrink-0 min-w-max"
                 >
                   {/* User Initials Badge */}
                   <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#1e1c27] border border-[#d4af37]/40 text-[#f3e5ab] flex items-center justify-center font-bold text-[10px] sm:text-xs flex-shrink-0">
@@ -99,7 +104,7 @@ export const LiveActivityTimeline: React.FC = () => {
                     
                     <span className="text-[10px] sm:text-xs text-[#a09d96] flex items-center gap-1 mt-0.5 leading-tight">
                       <MapPin className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#d4af37] flex-shrink-0" />
-                      <span className="truncate max-w-[200px] sm:max-w-[280px]">{item.location}</span>
+                      <span className="truncate max-w-[200px] sm:max-w-[320px]">{item.location}</span>
                     </span>
                   </div>
 
@@ -113,7 +118,7 @@ export const LiveActivityTimeline: React.FC = () => {
             ) : (
               <div className="flex items-center gap-2 text-xs text-[#a09d96] py-1 px-3">
                 <Sparkles className="w-3.5 h-3.5 text-[#d4af37] animate-pulse" />
-                <span>New customer appointments and festive reservations update live in real-time as clients book...</span>
+                <span>Real customer bookings and appointment confirmations will appear here live...</span>
               </div>
             )}
           </div>
@@ -128,7 +133,7 @@ export const LiveActivityTimeline: React.FC = () => {
               Total Bookings:
             </span>
             <span className="text-xs sm:text-sm font-bold font-mono text-[#f3e5ab] bg-black/60 px-2.5 py-0.5 rounded-md border border-[#d4af37]/35 shadow-inner">
-              {totalBookings}+
+              {totalCount}
             </span>
           </div>
         </div>
