@@ -12,8 +12,7 @@ import {
   Heart,
   Star,
   ExternalLink,
-  ShieldCheck,
-  Clock
+  ShieldCheck
 } from 'lucide-react';
 import { siteConfig } from '../../data/siteConfig';
 import { portfolioData } from '../../data/portfolio';
@@ -160,11 +159,11 @@ export const ArtistProfileView: React.FC<ArtistProfileViewProps> = ({
                 </div>
               </div>
 
-              {/* Action Buttons Row */}
-              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 w-full sm:w-auto">
+              {/* Action Buttons Row (Clean single-line with Icon Buttons) */}
+              <div className="flex items-center justify-center sm:justify-end gap-2 sm:gap-2.5 w-full sm:w-auto">
                 <button
                   onClick={onOpenBooking}
-                  className="btn-gold px-5 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase flex items-center gap-2 shadow-lg cursor-pointer flex-1 sm:flex-none justify-center"
+                  className="btn-gold px-4 sm:px-6 py-2.5 rounded-full text-[11px] sm:text-xs font-bold tracking-widest uppercase flex items-center justify-center gap-1.5 shadow-lg cursor-pointer flex-1 sm:flex-initial whitespace-nowrap active:scale-95 transition-transform"
                 >
                   <Calendar className="w-3.5 h-3.5 text-[#0a0a0c]" />
                   <span>Book Appointment</span>
@@ -174,46 +173,44 @@ export const ArtistProfileView: React.FC<ArtistProfileViewProps> = ({
                   href={getGeneralWhatsAppUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold tracking-wider uppercase flex items-center gap-1.5 shadow-md transition-colors flex-1 sm:flex-none justify-center"
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white shadow-md transition-all active:scale-95 flex items-center justify-center flex-shrink-0"
+                  title="Chat on WhatsApp"
+                  aria-label="WhatsApp"
                 >
-                  <MessageCircle className="w-3.5 h-3.5" />
-                  <span>WhatsApp</span>
+                  <MessageCircle className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
                 </a>
 
                 <a
                   href={getPhoneCallUrl()}
-                  className="p-2.5 rounded-full bg-[#1e1e28] hover:bg-[#2b2b3a] border border-[#d4af37]/30 text-[#f7e7ce] transition-colors"
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#1e1e28] hover:bg-[#2b2b3a] border border-[#d4af37]/30 text-[#f7e7ce] transition-all active:scale-95 flex items-center justify-center flex-shrink-0"
                   title="Call Studio"
+                  aria-label="Call Studio"
                 >
-                  <Phone className="w-4 h-4 text-[#d4af37]" />
+                  <Phone className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#d4af37]" />
                 </a>
               </div>
             </div>
 
             {/* Artist Titles & Location */}
-            <div className="text-center sm:text-left space-y-1.5 border-b border-[#22212a] pb-6">
-              <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3 justify-center sm:justify-start">
-                <h1 className="text-2xl sm:text-3xl font-display font-bold text-[#f7e7ce] tracking-wide">
+            <div className="text-center sm:text-left space-y-1.5 border-b border-[#22212a] pb-5">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2.5 justify-center sm:justify-start">
+                <h1 className="text-xl sm:text-3xl font-display font-bold text-[#f7e7ce] tracking-wide">
                   {siteConfig.artistName}
                 </h1>
-                <span className="inline-flex items-center justify-center gap-1 px-2.5 py-0.5 rounded-full bg-[#d4af37]/15 border border-[#d4af37]/40 text-[#f3e5ab] text-[11px] font-semibold tracking-wider uppercase w-fit mx-auto sm:mx-0">
+                <span className="inline-flex items-center justify-center gap-1 px-2.5 py-0.5 rounded-full bg-[#d4af37]/15 border border-[#d4af37]/40 text-[#f3e5ab] text-[10.5px] sm:text-[11px] font-semibold tracking-wider uppercase w-fit mx-auto sm:mx-0">
                   <ShieldCheck className="w-3 h-3 text-[#d4af37]" />
-                  Verified Lead Artist
+                  Verified Artist
                 </span>
               </div>
 
-              <p className="text-xs sm:text-sm text-[#d4af37] font-semibold tracking-wider uppercase">
+              <p className="text-xs sm:text-sm text-[#d4af37] font-medium tracking-wide">
                 {siteConfig.artistTitle}
               </p>
 
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-4 text-xs text-[#a09d96] pt-1">
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 text-xs text-[#a09d96] pt-0.5">
                 <span className="flex items-center gap-1">
                   <MapPin className="w-3.5 h-3.5 text-[#d4af37]" />
-                  <span>Sribhumi, Assam</span>
-                </span>
-                <span className="flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5 text-[#d4af37]" />
-                  <span>Open for Bookings (Prior Slot Required)</span>
+                  <span>Lowairpoa, Sribhumi, Assam</span>
                 </span>
                 <span className="flex items-center gap-1 text-[#e6ca65]">
                   <Star className="w-3.5 h-3.5 fill-[#d4af37] text-[#d4af37]" />
@@ -223,62 +220,62 @@ export const ArtistProfileView: React.FC<ArtistProfileViewProps> = ({
             </div>
 
             {/* 3. Social Metrics Bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 my-6">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3.5 my-5">
               {achievements.map((item, idx) => (
                 <div
                   key={idx}
-                  className="p-3 sm:p-4 rounded-2xl bg-[#161620] border border-[#262432] text-center"
+                  className="p-2.5 sm:p-3.5 rounded-2xl bg-[#161620] border border-[#262432] text-center"
                 >
-                  <div className="text-lg sm:text-2xl font-display font-bold text-gold-gradient">
+                  <div className="text-base sm:text-xl font-display font-bold text-gold-gradient">
                     {item.number}
                   </div>
-                  <div className="text-[10px] sm:text-xs text-[#a09d96] font-medium tracking-wide uppercase mt-0.5">
+                  <div className="text-[9.5px] sm:text-xs text-[#a09d96] font-medium tracking-wide uppercase mt-0.5">
                     {item.label}
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* 4. Bio & Philosophy */}
-            <div className="space-y-4 pt-2 border-t border-[#22212a]">
+            {/* 4. Bio & Philosophy (Clean & Compact) */}
+            <div className="space-y-3 pt-2 border-t border-[#22212a]">
               <div className="flex items-center gap-2 text-xs font-bold tracking-widest text-[#d4af37] uppercase">
                 <Heart className="w-3.5 h-3.5 text-[#d4af37]" />
-                <span>About Punam Kairi & Her Artistry</span>
+                <span>About Punam Kairi</span>
               </div>
 
-              <div className="text-xs sm:text-sm text-[#cfccc4] font-light leading-relaxed space-y-3">
+              <div className="text-xs sm:text-sm text-[#cfccc4] font-light leading-relaxed space-y-2.5">
                 <p>
-                  Namaste! I am <strong className="text-[#f7e7ce] font-medium">Mrs. Punam Kairi</strong>, founder and lead artist at <strong className="text-[#f7e7ce] font-medium">PUNAM KAIRI MAKEUP ARTISTRY</strong> based in Sribhumi, Assam.
+                  Namaste! I am <strong className="text-[#f7e7ce] font-medium">Mrs. Punam Kairi</strong>, founder & lead artist at <strong className="text-[#f7e7ce] font-medium">PUNAM KAIRI MAKEUP ARTISTRY</strong> in Lowairpoa, Sribhumi, Assam.
                 </p>
                 <p>
-                  My makeup philosophy is simple yet uncompromising: <em className="text-[#f3e5ab] font-serif-luxury">"Makeup should never mask your natural identity; it should elevate your innate grace with radiant confidence."</em>
+                  My makeup philosophy: <em className="text-[#f3e5ab] font-serif-luxury">"Makeup should never mask your natural identity; it should elevate your innate grace with radiant confidence."</em>
                 </p>
                 <p>
-                  Over the past 4+ years, I have had the privilege of transforming hundreds of brides, bridesmaids, and event guests. Every look is customized to your skin type, undertone, outfit color palette, and wedding lighting conditions to ensure absolute perfection in person and across high-definition photography.
+                  With 4+ years of expertise in bridal transformations, luxury facials, and festive styling, every appointment is tone-calibrated for flawless in-person grace and HD camera perfection.
                 </p>
               </div>
             </div>
 
-            {/* 5. Qualifications & Professional Standards */}
-            <div className="space-y-3.5 pt-6 border-t border-[#22212a] mt-6">
+            {/* 5. Qualifications & Standards */}
+            <div className="space-y-3 pt-5 border-t border-[#22212a] mt-5">
               <div className="flex items-center gap-2 text-xs font-bold tracking-widest text-[#d4af37] uppercase">
                 <Award className="w-3.5 h-3.5 text-[#d4af37]" />
-                <span>Qualifications & Expertise</span>
+                <span>Qualifications & Accreditations</span>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 {qualifications.map((q, idx) => (
                   <div
                     key={idx}
-                    className="p-3.5 sm:p-4 rounded-2xl bg-[#14141d] border border-[#262432] hover:border-[#d4af37]/40 transition-colors"
+                    className="p-3 sm:p-3.5 rounded-2xl bg-[#14141d] border border-[#262432] hover:border-[#d4af37]/40 transition-colors"
                   >
                     <h4 className="text-xs sm:text-sm font-semibold text-[#f7e7ce] tracking-wide">
                       {q.title}
                     </h4>
-                    <span className="text-[11px] text-[#d4af37] font-medium block mt-0.5">
+                    <span className="text-[10.5px] sm:text-[11px] text-[#d4af37] font-medium block mt-0.5">
                       {q.institution}
                     </span>
-                    <p className="text-xs text-[#a09d96] mt-1.5 leading-relaxed">
+                    <p className="text-[11.5px] sm:text-xs text-[#a09d96] mt-1 leading-relaxed">
                       {q.desc}
                     </p>
                   </div>
@@ -286,57 +283,67 @@ export const ArtistProfileView: React.FC<ArtistProfileViewProps> = ({
               </div>
             </div>
 
-            {/* 6. Signature Specialties Badges */}
-            <div className="space-y-3 pt-6 border-t border-[#22212a] mt-6">
-              <div className="flex items-center gap-2 text-xs font-bold tracking-widest text-[#d4af37] uppercase">
-                <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
-                <span>Signature Artistry Disciplines</span>
+            {/* 6. Signature Specialties Infinite Auto-Scrolling Marquee */}
+            <div className="space-y-3 pt-5 border-t border-[#22212a] mt-5 overflow-hidden">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs font-bold tracking-widest text-[#d4af37] uppercase">
+                  <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
+                  <span>Signature Specialties</span>
+                </div>
+                <span className="text-[10px] text-[#7a7872] hidden sm:inline">Hover to pause</span>
               </div>
 
-              <div className="flex flex-wrap gap-2">
-                {specialties.map((spec, idx) => (
-                  <span
-                    key={idx}
-                    className="px-3 py-1.5 rounded-xl bg-[#181824] border border-[#2b2938] text-[11px] sm:text-xs text-[#e0ddd5] font-medium flex items-center gap-1.5"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#d4af37]" />
-                    {spec}
-                  </span>
-                ))}
+              <div className="relative w-full overflow-hidden py-1">
+                {/* Fade Edge Gradients */}
+                <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#111117] to-transparent z-10 pointer-events-none" />
+                <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#111117] to-transparent z-10 pointer-events-none" />
+
+                {/* Infinite Marquee Loop */}
+                <div className="flex gap-2.5 w-max animate-marquee hover:[animation-play-state:paused] cursor-grab">
+                  {[...specialties, ...specialties].map((spec, idx) => (
+                    <span
+                      key={idx}
+                      className="px-3.5 py-1.5 rounded-full bg-[#181824] border border-[#2e2c3c] text-[11px] sm:text-xs text-[#e5e2da] font-medium flex items-center gap-1.5 flex-shrink-0 whitespace-nowrap shadow-sm hover:border-[#d4af37]/60 hover:text-white transition-colors"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#d4af37]" />
+                      {spec}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* 7. Studio Location & Contact Card */}
-            <div className="pt-6 border-t border-[#22212a] mt-6">
+            {/* 7. Studio Location & Complete Address Card */}
+            <div className="pt-5 border-t border-[#22212a] mt-5">
               <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#181824] to-[#121218] border border-[#d4af37]/35 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-xs font-bold tracking-widest text-[#d4af37] uppercase">
                     <MapPin className="w-4 h-4 text-[#d4af37]" />
-                    <span>Studio Location & Booking Desk</span>
+                    <span>Studio Address & Booking Desk</span>
                   </div>
                   <span className="text-[10px] text-emerald-400 font-semibold bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-500/30">
-                    Sribhumi, Assam
+                    Lowairpoa, Sribhumi
                   </span>
                 </div>
 
                 <div className="text-xs sm:text-sm text-[#f7e7ce] font-medium leading-relaxed">
-                  {siteConfig.address.full}
+                  Lowairpoa Kanmoon Road, Near Longai Bridge, Sribhumi, Assam – 788726
                 </div>
 
-                <div className="flex flex-wrap items-center gap-3 pt-2">
+                <div className="flex flex-wrap items-center gap-2.5 pt-1.5">
                   <a
                     href={siteConfig.googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-outline-gold px-4 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase inline-flex items-center gap-1.5"
+                    className="btn-outline-gold px-3.5 py-2 rounded-xl text-xs font-semibold tracking-wider uppercase inline-flex items-center gap-1.5"
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
-                    <span>Open in Google Maps</span>
+                    <span>Open Google Maps</span>
                   </a>
 
                   <a
                     href={getPhoneCallUrl()}
-                    className="px-4 py-2 rounded-xl bg-[#222230] hover:bg-[#2b2b3d] text-[#f7e7ce] text-xs font-semibold tracking-wider uppercase inline-flex items-center gap-1.5 border border-white/10"
+                    className="px-3.5 py-2 rounded-xl bg-[#222230] hover:bg-[#2b2b3d] text-[#f7e7ce] text-xs font-semibold tracking-wider uppercase inline-flex items-center gap-1.5 border border-white/10"
                   >
                     <Phone className="w-3.5 h-3.5 text-[#d4af37]" />
                     <span>{siteConfig.phone}</span>
