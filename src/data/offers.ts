@@ -73,21 +73,21 @@ export const durgaPujaFestiveOffers = {
       savingsBadge: "FESTIVE COMBO"
     },
     {
-      id: "puja-duo-facial",
-      badge: "Duo Glow Offer",
-      title: "Pre-Puja Duo Glow (Mother & Daughter)",
-      tagline: "Book 2 Luxury Facials & Save",
-      discountHighlight: "Extra 20% OFF on 2nd Facial",
-      description: "Share the festive glow ritual with mother or bestie. Choice of Gold or Diamond facials.",
+      id: "puja-facial-care",
+      badge: "Festive Glow Offer",
+      title: "Professional Facial Care",
+      tagline: "Healthy Skin & Natural Festive Glow",
+      discountHighlight: "Special Festive Discount Active",
+      description: "Multi-step deep hydration, tan removal, and skin rejuvenation for glowing, refreshed skin.",
       includedPerks: [
-        "Choice of Gold / Diamond Facial",
-        "Free Threading For Both",
+        "Choice of Gold / Diamond / Hydra Facial",
+        "Free Threading Included",
         "Antioxidant Hydration Lock"
       ],
-      validTill: "Pre-Puja Booking",
-      code: "PUJA-DUO-GLOW",
+      validTill: "Valid till Festive Season",
+      code: "PUJA-FACIAL-CARE",
       image: "/assets/images/banners/facial_main.png",
-      savingsBadge: "20% OFF"
+      savingsBadge: "SPECIAL DEAL"
     }
   ]
 };
