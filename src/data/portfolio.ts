@@ -1,4 +1,11 @@
-export type PortfolioCategory = 'ALL' | 'BRIDAL' | 'PARTY' | 'ENGAGEMENT' | 'RECEPTION' | 'GLAM' | 'TRADITIONAL' | 'PHOTOSHOOT';
+export type PortfolioCategory =
+  | 'ALL'
+  | 'BRIDAL'
+  | 'RECEPTION'
+  | 'CEREMONY'
+  | 'PARTY'
+  | 'FACIALS'
+  | 'THREADING';
 
 export interface PortfolioItem {
   id: string;
@@ -13,93 +20,131 @@ export interface PortfolioItem {
 }
 
 export const portfolioCategories: { id: PortfolioCategory; label: string }[] = [
-  { id: 'ALL', label: 'All Looks' },
-  { id: 'BRIDAL', label: 'Bridal' },
-  { id: 'ENGAGEMENT', label: 'Engagement' },
+  { id: 'ALL', label: 'All Showcases' },
+  { id: 'BRIDAL', label: 'Bridal Artistry' },
   { id: 'RECEPTION', label: 'Reception' },
-  { id: 'PARTY', label: 'Party' },
-  { id: 'GLAM', label: 'Soft & Full Glam' },
-  { id: 'TRADITIONAL', label: 'Traditional' },
-  { id: 'PHOTOSHOOT', label: 'Photoshoot' },
+  { id: 'CEREMONY', label: 'Haldi & Mehendi' },
+  { id: 'PARTY', label: 'Party & Festive' },
+  { id: 'FACIALS', label: 'Facials & Skin Glow' },
+  { id: 'THREADING', label: 'Threading & Grooming' },
 ];
 
 export const portfolioData: PortfolioItem[] = [
   {
-    id: 'port-1',
-    title: 'Royal Bridal Artistry & Traditional Grace',
+    id: 'port-main-opening',
+    title: 'PK Makeup Artistry & Studio Grand Opening',
+    category: 'BRIDAL',
+    categoryLabel: 'Signature Studio',
+    imageUrl: '/assets/images/banners/main_banner.png',
+    description: 'Punam Kairi Makeup Artistry official banner showcase. Bespoke bridal, wedding, skin care, and festive transformations in Golaghat.',
+    techniques: ['Signature Artistry', 'HD Base', 'Skin Prep', 'Bridal Masterclass'],
+    featured: true
+  },
+  {
+    id: 'port-bridal-artistry',
+    title: 'Royal Indian Bridal Artistry & Traditional Elegance',
     category: 'BRIDAL',
     categoryLabel: 'Bridal Artistry',
-    imageUrl: '/assets/images/banners/banner-bridal-makeup.jpg',
-    description: 'A regal traditional Indian bridal look with sculpted bone structure, rich crimson lip styling, and waterproof gold-flecked eye artistry.',
-    techniques: ['Ultra HD Base', 'Cut Crease', 'Mink Lashes', 'Smudgeproof Lip'],
+    imageUrl: '/assets/images/banners/bridal_banner.png',
+    description: 'Flawless 16-hour royal bridal makeup featuring waterproof HD base, sculpted contouring, mink lashes, and jewel setting.',
+    techniques: ['Regal HD Complexion', 'Cut Crease Art', 'Mink Lashes', 'Smudgeproof Lip'],
     featured: true
   },
   {
-    id: 'port-2',
-    title: 'Pre-Wedding Picture-Perfect Natural Glam',
-    category: 'ENGAGEMENT',
-    categoryLabel: 'Engagement & Pre-Wedding',
-    imageUrl: '/assets/images/banners/banner-prewedding-makeup.jpg',
-    description: 'Dreamy, romantic pre-wedding and engagement makeup featuring soft champagne lids, feathered brows, and a glass-skin finish.',
-    techniques: ['Dewy Prep', 'Camera-Ready Base', 'Cream Blush', 'Natural Glow'],
+    id: 'port-reception-gala',
+    title: 'Reception & Evening Gala Contemporary Glam',
+    category: 'RECEPTION',
+    categoryLabel: 'Reception & Gala',
+    imageUrl: '/assets/images/banners/reaception_banner.png',
+    description: 'High-fashion evening reception glam tailored for artificial lighting, featuring sculpted cheekbones and dramatic eye artistry.',
+    techniques: ['Ballroom Lighting Ready', 'Smokey Shimmer', 'Sculpted Cheekbones', 'Transfer-Proof Base'],
     featured: true
   },
   {
-    id: 'port-3',
-    title: 'Professional Facial Care & Rejuvenation',
-    category: 'GLAM',
-    categoryLabel: 'Facials & Skin Care',
-    imageUrl: '/assets/images/banners/banner-facial-care.jpg',
-    description: 'Deep pore cleansing, 24K Gold and Diamond De-Tan skin renewal treatments for a glowing, youthful canvas.',
-    techniques: ['Deep Cleansing', 'Gold Infusion', 'Lymphatic Massage', 'Antioxidant Lock'],
+    id: 'port-haldi-ceremony',
+    title: 'Sunny Haldi Ceremony Fresh & Dewy Radiance',
+    category: 'CEREMONY',
+    categoryLabel: 'Haldi Ceremony',
+    imageUrl: '/assets/images/banners/haldi_banner.png',
+    description: 'Sun-kissed, sweat-resistant dewy styling designed for outdoor daytime Haldi festivities with a radiant natural flush.',
+    techniques: ['Daylight Balanced', 'Sweat-Resistant Base', 'Coral Shimmer', 'Hydrated Glow'],
     featured: true
   },
   {
-    id: 'port-4',
-    title: 'Signature Party Glam For Every Occasion',
+    id: 'port-mehendi-sangeet',
+    title: 'Vibrant Mehendi & Sangeet Celebration Styling',
+    category: 'CEREMONY',
+    categoryLabel: 'Mehendi & Sangeet',
+    imageUrl: '/assets/images/banners/mehendi_banner.png',
+    description: 'Playful, vibrant makeup with long-lasting dance-proof formula, colored eyeliner accents, and feathered natural brows.',
+    techniques: ['Dance-Proof Wear', 'Luminous Glow', 'Accent Eye Detail', 'Velvet Lip'],
+    featured: true
+  },
+  {
+    id: 'port-party-festive',
+    title: 'High-Impact Party & Festive Red Carpet Glam',
     category: 'PARTY',
     categoryLabel: 'Party & Festive',
-    imageUrl: '/assets/images/banners/banner-party-makeup.jpg',
-    description: 'Vibrant party-ready makeup with intense lash volume, illuminated cheekbones, and long-lasting transfer-proof finish.',
-    techniques: ['High-Impact Glow', 'Volume Lashes', 'Bold Eye Art', '12-Hr Lock'],
+    imageUrl: '/assets/images/banners/party_banner.png',
+    description: 'Bold and glamorous party makeup for birthdays, anniversaries, and festive Durga Puja pandal nights.',
+    techniques: ['Ultra HD Base', 'Lash Volume Boost', 'Illuminated Glow', 'Transfer Lock'],
     featured: true
   },
   {
-    id: 'port-5',
-    title: 'Rose Gold High-Fashion Editorial',
-    category: 'PHOTOSHOOT',
-    categoryLabel: 'Photoshoot',
-    imageUrl: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1200&q=85',
-    description: 'Camera-calibrated editorial makeup designed for high-resolution studio flash with zero flashback and razor-sharp detailing.',
-    techniques: ['Studio Anti-Flash', 'Graphic Accents', 'Satin Skin', 'Micro-Pigments'],
+    id: 'port-facial-main',
+    title: 'Professional Facials & Deep Skin Rejuvenation',
+    category: 'FACIALS',
+    categoryLabel: 'Facials & Skin Glow',
+    imageUrl: '/assets/images/banners/facial_main.png',
+    description: 'Comprehensive skin rejuvenation combining deep cleansing, botanical steam, facial massage, and active glow masks.',
+    techniques: ['Deep Pore Cleansing', 'Lymphatic Massage', 'Herbal Steam', 'Antioxidant Infusion'],
     featured: true
   },
   {
-    id: 'port-6',
-    title: 'Modern Soft Glam & Dewy Glow',
-    category: 'GLAM',
-    categoryLabel: 'Soft Glam',
-    imageUrl: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1200&q=85',
-    description: 'Effortless luxury focusing on skin health, natural brow definition, and subtle monochromatic rose-gold tones.',
-    techniques: ['Skin Tint Base', 'Feathered Brows', 'Hydrating Gloss', 'Liquid Highlight'],
+    id: 'port-lotus-gold-facial',
+    title: 'Lotus 24K Gold Luxury Radiance Facial',
+    category: 'FACIALS',
+    categoryLabel: '24K Gold Luxury',
+    imageUrl: '/assets/images/banners/lotus_gold_faicial_banner.png',
+    description: 'Opulent Lotus 24K gold foil therapy delivering an illuminated bridal glow, collagen stimulation, and silky skin texture.',
+    techniques: ['24K Gold Foil Infusion', 'Deep Exfoliation', 'Cryo Soothing', 'Firming Mask'],
     featured: true
   },
   {
-    id: 'port-7',
-    title: 'Classic Cocktail Night Party Glam',
-    category: 'PARTY',
-    categoryLabel: 'Party Glam',
-    imageUrl: 'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=1200&q=85',
-    description: 'Vibrant party-ready makeup with intense lash volume, illuminated cheekbones, and long-lasting transfer-proof finish.',
-    techniques: ['Volume Lashes', 'High-Impact Glow', 'Bold Liner', 'Transfer Lock']
+    id: 'port-fruit-facial',
+    title: 'Nourishing Fresh Fruit Vitamin Glow Facial',
+    category: 'FACIALS',
+    categoryLabel: 'Fruit Nourishing',
+    imageUrl: '/assets/images/banners/fruit_banner.png',
+    description: 'Natural fruit extract therapy packed with vitamins A, C, and E to restore dull skin and impart a healthy natural flush.',
+    techniques: ['Natural Fruit Enzymes', 'Vitamin Boost', 'Gentle Polish', 'Hydration Blanket']
   },
   {
-    id: 'port-8',
-    title: 'Porcelain Airbrush Bridal Radiance',
-    category: 'BRIDAL',
-    categoryLabel: 'Bridal Artistry',
-    imageUrl: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=85',
-    description: 'Velvety airbrushed complexion that remains immaculate through humidity, emotion, and close-up cinematic videography.',
-    techniques: ['Airbrush Foundation', 'Waterproof Seal', 'Dimensional Eye', 'Jewelry Styling']
+    id: 'port-papaya-facial',
+    title: 'Papaya Enzyme De-Tan & Deep Brightening Facial',
+    category: 'FACIALS',
+    categoryLabel: 'De-Tan Brightening',
+    imageUrl: '/assets/images/banners/papya_banner.png',
+    description: 'Targeted papaya papain enzyme treatment that gently clears stubborn sun tan, pigmentation, and uneven texture.',
+    techniques: ['Papain Bio-Enzymes', 'Sun-Tan Clearing', 'Pore Tightening', 'Cooling Compress']
+  },
+  {
+    id: 'port-express-cleanup',
+    title: 'Instant Glow Express Skin Cleanup & Polishing',
+    category: 'FACIALS',
+    categoryLabel: 'Skin Cleanup',
+    imageUrl: '/assets/images/banners/Cleanup_banner.png',
+    description: 'Quick 35-minute revitalizing skin prep featuring blackhead extraction, dead cell polishing, and an instant glow pack.',
+    techniques: ['T-Zone Extraction', 'Micro-Scrub Polish', 'Ice Globe Soothe', 'Instant Radiance Pack']
+  },
+  {
+    id: 'port-threading-grooming',
+    title: 'Precision Eyebrow Architecture & Grooming',
+    category: 'THREADING',
+    categoryLabel: 'Precision Grooming',
+    imageUrl: '/assets/images/banners/threading_banner.png',
+    description: 'Artisanal brow mapping, organic cotton threading, and peach fuzz removal followed by cooling chilled aloe therapy.',
+    techniques: ['Brow Architecture', 'Organic Thread', 'Peach Fuzz Removal', 'Aloe Vera Calming'],
+    featured: true
   }
 ];

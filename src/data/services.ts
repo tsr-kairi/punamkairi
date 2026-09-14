@@ -42,7 +42,7 @@ export const servicesData: ServiceItem[] = [
     duration: '3.5 - 4.5 Hours',
     badge: 'Signature Experience',
     popular: true,
-    image: '/assets/images/banners/banner-bridal-makeup.jpg',
+    image: '/assets/images/banners/bridal_banner.png',
     includedItems: [
       'Personalized Skin Prep & Deep Hydration Ritual',
       'Ultra HD / Airbrush Long-Wear Foundation Base',
@@ -67,7 +67,7 @@ export const servicesData: ServiceItem[] = [
     duration: '3 - 3.5 Hours',
     badge: '4K Camera Ready',
     popular: true,
-    image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/bridal_banner.png',
     includedItems: [
       'HD Skin Primer & Pore Refining Treatment',
       'Micro-Blend HD Base Matching Skin Undertones',
@@ -90,7 +90,7 @@ export const servicesData: ServiceItem[] = [
     priceType: 'contact',
     duration: '3.5 - 4 Hours',
     badge: 'Ultra Long-Wear',
-    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/bridal_banner.png',
     includedItems: [
       'Airbrush Moisture Barrier Preparation',
       'Precision Airbrush Foundation Spray Base',
@@ -116,7 +116,7 @@ export const servicesData: ServiceItem[] = [
     duration: '2.5 - 3 Hours',
     badge: 'Popular Choice',
     popular: true,
-    image: '/assets/images/banners/banner-prewedding-makeup.jpg',
+    image: '/assets/images/banners/reaception_banner.png',
     includedItems: [
       'Skin Conditioning & Illuminating Primer',
       'Medium-to-Full HD Foundation Base',
@@ -138,7 +138,7 @@ export const servicesData: ServiceItem[] = [
     price: 'Contact for Quote',
     priceType: 'contact',
     duration: '2.5 - 3 Hours',
-    image: 'https://images.unsplash.com/photo-1503236823255-94609f598e71?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/reaception_banner.png',
     includedItems: [
       'Evening Skin Hydration & Velvet Prep',
       'Sculpted HD Foundation & High-Definition Concealing',
@@ -159,7 +159,7 @@ export const servicesData: ServiceItem[] = [
     price: 'Contact for Quote',
     priceType: 'contact',
     duration: '2 - 2.5 Hours',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/haldi_banner.png',
     includedItems: [
       'Sun-Protected Dewy Skin Base',
       'Lightweight Long-Wear Foundation',
@@ -183,7 +183,7 @@ export const servicesData: ServiceItem[] = [
     priceType: 'contact',
     duration: '1.5 - 2 Hours',
     popular: true,
-    image: '/assets/images/banners/banner-party-makeup.jpg',
+    image: '/assets/images/banners/party_banner.png',
     includedItems: [
       'Quick Radiance Skin Preparation',
       'Flawless Medium-Coverage Foundation',
@@ -204,7 +204,7 @@ export const servicesData: ServiceItem[] = [
     price: 'Contact for Quote',
     priceType: 'contact',
     duration: '2 Hours',
-    image: 'https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/mehendi_banner.png',
     includedItems: [
       'Dewy Traditional Prep Base',
       'Kohl-Rimmed Classic Eye Styling',
@@ -225,7 +225,7 @@ export const servicesData: ServiceItem[] = [
     price: 'Contact for Quote',
     priceType: 'contact',
     duration: '1.5 Hours',
-    image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/party_banner.png',
     includedItems: [
       'Glow-Boosting Serum Primer',
       'Skin-Like Weightless Tint Foundation',
@@ -250,7 +250,7 @@ export const servicesData: ServiceItem[] = [
     duration: '60 - 75 Mins',
     badge: 'Durga Puja Special',
     popular: true,
-    image: '/assets/images/banners/banner-facial-care.jpg',
+    image: '/assets/images/banners/lotus_gold_faicial_banner.png',
     includedItems: [
       'Double Cleansing & Warm Herbal Steam',
       'Exfoliating Gold Micro-Bead Scrub',
@@ -273,7 +273,7 @@ export const servicesData: ServiceItem[] = [
     duration: '60 Mins',
     badge: 'Tan Removal Hit',
     popular: true,
-    image: 'https://images.unsplash.com/photo-1512290900672-1f5be1c61834?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/papya_banner.png',
     includedItems: [
       'De-Tan Deep Purifying Cleanser',
       'Diamond Micro-Crystal Exfoliation',
@@ -296,7 +296,7 @@ export const servicesData: ServiceItem[] = [
     duration: '60 Mins',
     badge: 'Korean Glass Glow',
     popular: true,
-    image: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/facial_main.png',
     includedItems: [
       'Hydrating Milk Foam Cleanse',
       'Gentle Lactic Acid Exfoliation',
@@ -318,7 +318,7 @@ export const servicesData: ServiceItem[] = [
     priceType: 'starting',
     duration: '60 Mins',
     badge: 'High Impact Glow',
-    image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/fruit_banner.png',
     includedItems: [
       'Deep Oxygenating Cleanse',
       'Enzymatic Pore Refining Treatment',
@@ -340,7 +340,7 @@ export const servicesData: ServiceItem[] = [
     priceType: 'starting',
     duration: '50 Mins',
     badge: 'Acne & Sensitive Skin',
-    image: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/fruit_banner.png',
     includedItems: [
       'Herbal Neem Deep Cleanser',
       'Gentle Walnut & Oats Exfoliation',
@@ -361,7 +361,7 @@ export const servicesData: ServiceItem[] = [
     priceType: 'starting',
     duration: '35 Mins',
     badge: 'Quick Prep',
-    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/Cleanup_banner.png',
     includedItems: [
       'Gentle Foaming Deep Cleanser',
       'Micro-Exfoliating Walnut & Fruit Scrub',
@@ -385,7 +385,7 @@ export const servicesData: ServiceItem[] = [
     duration: '15 Mins',
     badge: 'Signature Framing',
     popular: true,
-    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/threading_banner.png',
     includedItems: [
       'Facial Proportion Brow Mapping',
       'Precision Organic Thread Shaping',
@@ -405,7 +405,7 @@ export const servicesData: ServiceItem[] = [
     priceType: 'starting',
     duration: '15 Mins',
     badge: 'Essential Prep',
-    image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/threading_banner.png',
     includedItems: [
       'Skin Powder Prep',
       'Upper Lip Precision Threading',
@@ -426,7 +426,7 @@ export const servicesData: ServiceItem[] = [
     duration: '30 Mins',
     badge: 'Flawless Canvas',
     popular: true,
-    image: 'https://images.unsplash.com/photo-1512290900672-1f5be1c61834?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/threading_banner.png',
     includedItems: [
       'Forehead Hairline Framing',
       'Eyebrow Arch Sculpting',
@@ -447,7 +447,7 @@ export const servicesData: ServiceItem[] = [
     priceType: 'starting',
     duration: '20 Mins',
     badge: 'Contour Detailing',
-    image: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/threading_banner.png',
     includedItems: [
       'Forehead Hairline Defining',
       'Sideburn Grooming & Tapering',
@@ -468,7 +468,7 @@ export const servicesData: ServiceItem[] = [
     duration: '45 Mins',
     badge: 'Grooming Combo',
     popular: true,
-    image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/threading_banner.png',
     includedItems: [
       'Complete Full Face Threading (All Zones)',
       'Cryo Ice-Globe Massage',
@@ -490,7 +490,7 @@ export const servicesData: ServiceItem[] = [
     priceType: 'contact',
     duration: '2 - 3 Hours',
     badge: 'Studio Calibrated',
-    image: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/main_banner.png',
     includedItems: [
       'Non-Reflective Matte/Satin Base Chemistry',
       'Zero-Flashback Powder Setting',
@@ -511,7 +511,7 @@ export const servicesData: ServiceItem[] = [
     price: 'Contact for Quote',
     priceType: 'contact',
     duration: '1 Hour',
-    image: 'https://images.unsplash.com/photo-1583001931096-959e9a1a6223?auto=format&fit=crop&w=1000&q=80',
+    image: '/assets/images/banners/bridal_banner.png',
     includedItems: [
       'Eye Primer & Canvas Base Neutralization',
       'Precision Cut Crease / Halo / Gradient Technique',

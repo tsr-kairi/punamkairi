@@ -109,10 +109,10 @@ export const siteConfig: SiteConfig = {
     artistHeroImage: "/assets/images/punam-kairi-portrait.jpg",
     artistPortraitSquare: "/assets/images/punam-kairi-portrait.jpg",
     banners: {
-      bridal: "/assets/images/banners/banner-bridal-makeup.jpg",
-      preWedding: "/assets/images/banners/banner-prewedding-makeup.jpg",
-      facialCare: "/assets/images/banners/banner-facial-care.jpg",
-      party: "/assets/images/banners/banner-party-makeup.jpg"
+      bridal: "/assets/images/banners/bridal_banner.png",
+      preWedding: "/assets/images/banners/haldi_banner.png",
+      facialCare: "/assets/images/banners/facial_main.png",
+      party: "/assets/images/banners/party_banner.png"
     }
   },
   policy: {

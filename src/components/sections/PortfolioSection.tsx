@@ -62,24 +62,24 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ onOpenBookin
           })}
         </div>
 
-        {/* Portfolio Masonry / 2-Col Grid on Mobile */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6">
+        {/* Portfolio Responsive Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filteredItems.map((item) => (
             <div
               key={item.id}
               onClick={() => setActiveLightboxItem(item)}
-              className="group relative rounded-2xl overflow-hidden bg-[#121217] border border-[#26242c] hover:border-[#d4af37]/50 shadow-xl transition-all duration-500 cursor-pointer flex flex-col justify-end aspect-[3/4]"
+              className="group relative rounded-2xl overflow-hidden bg-[#121217] border border-[#26242c] hover:border-[#d4af37]/50 shadow-xl transition-all duration-500 cursor-pointer flex flex-col justify-end aspect-[16/10]"
             >
               {/* Image */}
               <img
                 src={item.imageUrl}
                 alt={item.title}
-                className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700 ease-out"
+                className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                 loading="lazy"
               />
 
               {/* Dark Overlays */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/35 to-transparent opacity-65 group-hover:opacity-85 transition-opacity" />
 
               {/* Top Category Badge */}
               <div className="absolute top-3.5 left-3.5 z-10">
@@ -94,22 +94,22 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ onOpenBookin
               </div>
 
               {/* Subtle PK Watermark */}
-              <div className="absolute bottom-24 right-3 z-10 opacity-30 group-hover:opacity-75 transition-opacity text-[8px] tracking-widest font-display text-[#d4af37] uppercase select-none">
+              <div className="absolute bottom-20 right-3 z-10 opacity-30 group-hover:opacity-75 transition-opacity text-[8px] tracking-widest font-display text-[#d4af37] uppercase select-none">
                 PK ARTISTRY
               </div>
 
               {/* Bottom Content Card */}
-              <div className="relative z-10 p-2.5 sm:p-5 transform translate-y-1 sm:translate-y-2 group-hover:translate-y-0 transition-transform">
-                <h3 className="text-xs sm:text-base font-display font-bold text-[#f7e7ce] leading-tight mb-1 group-hover:text-white line-clamp-1 sm:line-clamp-none">
+              <div className="relative z-10 p-3 sm:p-5 transform translate-y-1 sm:translate-y-2 group-hover:translate-y-0 transition-transform">
+                <h3 className="text-sm sm:text-base font-display font-bold text-[#f7e7ce] leading-tight mb-1 group-hover:text-white line-clamp-1 sm:line-clamp-none">
                   {item.title}
                 </h3>
                 
-                <p className="hidden sm:block text-[11px] text-[#b0ada5] line-clamp-2 font-light leading-relaxed mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <p className="hidden sm:block text-[11px] text-[#b0ada5] line-clamp-2 font-light leading-relaxed mb-2 sm:mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   {item.description}
                 </p>
 
-                <div className="flex items-center justify-between text-[9px] sm:text-[10px] font-semibold text-[#d4af37] tracking-wider uppercase pt-1.5 sm:pt-2 border-t border-white/10">
-                  <span>View Look</span>
+                <div className="flex items-center justify-between text-[10px] font-semibold text-[#d4af37] tracking-wider uppercase pt-1.5 sm:pt-2 border-t border-white/10">
+                  <span>View Details</span>
                   <span>→</span>
                 </div>
               </div>

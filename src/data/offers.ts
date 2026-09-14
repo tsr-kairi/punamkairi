@@ -34,7 +34,7 @@ export const durgaPujaFestiveOffers = {
       validTill: "Valid till Festive Season",
       code: "PUJA-GOLD-GLOW",
       popular: true,
-      image: "/assets/images/banners/banner-durga-puja-facial-offer.jpg",
+      image: "/assets/images/banners/lotus_gold_faicial_banner.png",
       savingsBadge: "FREE GIFT"
     },
     {
@@ -52,7 +52,7 @@ export const durgaPujaFestiveOffers = {
       validTill: "Limited Festive Slots",
       code: "PUJA-BRIDAL-DEAL",
       popular: true,
-      image: "/assets/images/banners/banner-bridal-makeup.jpg",
+      image: "/assets/images/banners/bridal_banner.png",
       savingsBadge: "GRAND DEAL"
     },
     {
@@ -69,7 +69,7 @@ export const durgaPujaFestiveOffers = {
       ],
       validTill: "Special Puja Days Only",
       code: "PUJA-NIGHT-GLAM",
-      image: "/assets/images/banners/banner-party-makeup.jpg",
+      image: "/assets/images/banners/party_banner.png",
       savingsBadge: "FESTIVE COMBO"
     },
     {
@@ -86,7 +86,7 @@ export const durgaPujaFestiveOffers = {
       ],
       validTill: "Pre-Puja Booking",
       code: "PUJA-DUO-GLOW",
-      image: "/assets/images/banners/banner-durga-puja-opening.jpg",
+      image: "/assets/images/banners/facial_main.png",
       savingsBadge: "20% OFF"
     }
   ]

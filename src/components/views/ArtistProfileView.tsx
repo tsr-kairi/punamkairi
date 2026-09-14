@@ -122,7 +122,7 @@ export const ArtistProfileView: React.FC<ArtistProfileViewProps> = ({
           {/* 1. Cover Banner */}
           <div className="relative h-44 sm:h-64 md:h-72 w-full overflow-hidden bg-[#181822]">
             <img
-              src="/assets/images/banners/banner-durga-puja-opening.jpg"
+              src="/assets/images/banners/main_banner.png"
               alt="Punam Kairi Studio Banner"
               className="w-full h-full object-cover object-center"
             />

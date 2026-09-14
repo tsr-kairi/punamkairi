@@ -93,14 +93,14 @@ export const PortfolioLightbox: React.FC<PortfolioLightboxProps> = ({
       {/* Main Lightbox Content Card */}
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative z-10 max-w-4xl w-full max-h-[90vh] bg-[#101015] border border-[#d4af37]/30 rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row my-auto"
+        className="relative z-10 max-w-5xl w-full max-h-[90vh] bg-[#101015] border border-[#d4af37]/30 rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row my-auto"
       >
         {/* Image Area */}
-        <div className="relative md:w-3/5 bg-black flex items-center justify-center overflow-hidden min-h-[300px] sm:min-h-[420px] max-h-[55vh] md:max-h-none">
+        <div className="relative md:w-3/5 bg-black flex items-center justify-center overflow-hidden min-h-[260px] sm:min-h-[420px] max-h-[55vh] md:max-h-none p-2 sm:p-3">
           <img
             src={item.imageUrl}
             alt={item.title}
-            className="w-full h-full object-contain md:object-cover max-h-[80vh]"
+            className="w-full h-full object-contain max-h-[80vh] rounded-lg"
           />
 
           {/* PK Watermark Overlay */}

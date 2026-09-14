@@ -19,40 +19,58 @@ interface BannerSlide {
 
 const bannerSlides: BannerSlide[] = [
   {
-    id: 'banner-durga-puja-opening',
-    title: 'শুভ শারদীয়া দুর্গোৎসবের অগ্রিম শুভেচ্ছা - We Are Initially Opening PK Makeup Artistry',
-    image: '/assets/images/banners/banner-durga-puja-opening.jpg',
+    id: 'banner-main-opening',
+    title: 'PK Makeup Artistry - Grand Opening Special & Studio Announcement',
+    image: '/assets/images/banners/main_banner.png',
     targetCategory: 'ALL'
   },
   {
-    id: 'banner-durga-puja-facial-offer',
-    title: 'Sharadiya Durga Puja Special Offer - Professional Facial Care',
-    image: '/assets/images/banners/banner-durga-puja-facial-offer.jpg',
-    targetCategory: 'FACIALS'
-  },
-  {
     id: 'banner-bridal',
-    title: 'Bridal Makeup - Your Big Day, Our Expertise',
-    image: '/assets/images/banners/banner-bridal-makeup.jpg',
+    title: 'Royal Bridal Makeup Artistry - Your Big Day, Our Expertise',
+    image: '/assets/images/banners/bridal_banner.png',
     targetCategory: 'BRIDAL'
   },
   {
-    id: 'banner-prewedding',
-    title: 'Pre-Wedding Makeup - Look Picture Perfect, Naturally',
-    image: '/assets/images/banners/banner-prewedding-makeup.jpg',
+    id: 'banner-reception',
+    title: 'Reception & Evening Gala Makeup Artistry',
+    image: '/assets/images/banners/reaception_banner.png',
     targetCategory: 'WEDDING_EVENTS'
   },
   {
-    id: 'banner-facial',
-    title: 'Professional Facial Care - Healthy Skin | Natural Glow',
-    image: '/assets/images/banners/banner-facial-care.jpg',
+    id: 'banner-lotus-gold',
+    title: 'Lotus 24K Gold Luxury Radiance Facial',
+    image: '/assets/images/banners/lotus_gold_faicial_banner.png',
     targetCategory: 'FACIALS'
   },
   {
     id: 'banner-party',
     title: 'Party Makeup - Glam For Every Occasion',
-    image: '/assets/images/banners/banner-party-makeup.jpg',
+    image: '/assets/images/banners/party_banner.png',
     targetCategory: 'PARTY_OCCASION'
+  },
+  {
+    id: 'banner-haldi',
+    title: 'Haldi Ceremony Styling - Fresh & Dewy Radiance',
+    image: '/assets/images/banners/haldi_banner.png',
+    targetCategory: 'WEDDING_EVENTS'
+  },
+  {
+    id: 'banner-mehendi',
+    title: 'Mehendi & Sangeet Celebration Looks',
+    image: '/assets/images/banners/mehendi_banner.png',
+    targetCategory: 'WEDDING_EVENTS'
+  },
+  {
+    id: 'banner-facial-main',
+    title: 'Professional Facial Care - Healthy Skin | Natural Glow',
+    image: '/assets/images/banners/facial_main.png',
+    targetCategory: 'FACIALS'
+  },
+  {
+    id: 'banner-threading',
+    title: 'Precision Eyebrow Architecture & Grooming',
+    image: '/assets/images/banners/threading_banner.png',
+    targetCategory: 'THREADING'
   }
 ];
 
@@ -150,7 +168,7 @@ export const Hero: React.FC<HeroProps> = ({
           className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-[#d4af37]/45 bg-[#121217] shadow-[0_10px_40px_rgba(0,0,0,0.85)] group cursor-pointer"
         >
           {/* Aspect Ratio Box to keep 100% visible on Mobile & Desktop */}
-          <div className="relative w-full aspect-[1024/535] overflow-hidden select-none">
+          <div className="relative w-full aspect-[16/9] overflow-hidden select-none">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
                 key={currentSlide.id}
@@ -165,7 +183,7 @@ export const Hero: React.FC<HeroProps> = ({
                 <img
                   src={currentSlide.image}
                   alt={currentSlide.title}
-                  className="w-full h-full object-cover sm:object-contain bg-[#111116]"
+                  className="w-full h-full object-cover bg-[#111116]"
                   loading="eager"
                   draggable={false}
                 />
