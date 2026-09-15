@@ -172,7 +172,7 @@ export const FestiveOffersModal: React.FC<FestiveOffersModalProps> = ({ isOpen, 
 
           {/* Header */}
           <div className="text-center mb-4 sm:mb-6 relative z-10">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-rose-950 via-rose-900 to-rose-950 border border-[#d4af37]/60 text-[#fceade] text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-1.5 shadow-md">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-rose-950 via-rose-900 to-rose-950 border border-[#d4af37]/60 text-[#fceade] text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-2 shadow-md">
               <Gift className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#d4af37] animate-bounce" />
               <span>{durgaPujaFestiveOffers.festivalName}</span>
             </div>
@@ -180,8 +180,14 @@ export const FestiveOffersModal: React.FC<FestiveOffersModalProps> = ({ isOpen, 
             <h2 className="text-xl sm:text-3xl font-display font-bold text-[#f7e7ce]">
               Exclusive Festive Artistry Offers
             </h2>
+
+            {/* Special 10% OFF Badge */}
+            <div className="my-2 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#d4af37]/20 border border-[#d4af37] text-[#f7e7ce] text-xs font-bold shadow-inner">
+              <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
+              <span>FLAT 10% OFF ON ALL PUJA SERVICES • VALID 15 SEP – 15 OCT</span>
+            </div>
             
-            <p className="text-[11px] sm:text-sm text-[#d4af37] font-serif-luxury italic mt-0.5 max-w-md mx-auto">
+            <p className="text-[11px] sm:text-sm text-[#d4af37] font-serif-luxury italic mt-1 max-w-md mx-auto">
               "{durgaPujaFestiveOffers.subheading}"
             </p>
           </div>

@@ -40,10 +40,10 @@ export const FestiveFloatingBadge: React.FC<FestiveFloatingBadgeProps> = ({ onOp
         <div className="text-left">
           <div className="text-[9px] uppercase tracking-widest text-[#f3e5ab] font-bold flex items-center gap-1">
             <Sparkles className="w-2.5 h-2.5 text-[#d4af37]" />
-            <span>Grand Opening</span>
+            <span>15 Sep – 15 Oct</span>
           </div>
           <div className="text-xs sm:text-sm font-display font-bold text-white tracking-wide leading-none mt-0.5">
-            Durga Puja Offers
+            Puja 10% OFF
           </div>
         </div>
       </motion.button>

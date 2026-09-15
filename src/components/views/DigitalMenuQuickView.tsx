@@ -113,11 +113,12 @@ export const DigitalMenuQuickView: React.FC<DigitalMenuQuickViewProps> = ({
                 <Gift className="w-4 h-4 text-black" />
               </div>
               <div>
-                <div className="text-[10px] uppercase font-bold text-[#fceade] tracking-wider">
-                  🌸 Durga Puja & Launch Offer
+                <div className="text-[10px] uppercase font-bold text-[#fceade] tracking-wider flex items-center gap-1.5 flex-wrap">
+                  <span>🌸 Durga Puja Special</span>
+                  <span className="px-1.5 py-0.2 rounded-full bg-[#d4af37] text-black text-[9px] font-extrabold">15 Sep – 15 Oct</span>
                 </div>
                 <div className="text-xs font-bold text-white leading-tight">
-                  Flat Festive Discounts & Free Perks!
+                  Flat 10% OFF on all Facials, Threading & Cleanup!
                 </div>
               </div>
             </div>

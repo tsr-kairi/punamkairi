@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Sparkles } from 'lucide-react';
+import { Calendar, Sparkles, Gift } from 'lucide-react';
 import { servicesData, serviceCategories } from '../../data/services';
 import type { ServiceCategory, ServiceItem } from '../../data/services';
 import { SectionHeader } from '../common/SectionHeader';
@@ -59,6 +59,34 @@ export const ServicesMenu: React.FC<ServicesMenuProps> = ({
           title="THE SIGNATURE COLLECTION"
           subtitle="Tone-calibrated bridal transformations, pre-puja facial rejuvenation, and festive glam tailored with perfection."
         />
+
+        {/* Durga Puja Special Offer Strip */}
+        <div className="mb-6 p-3 sm:p-3.5 rounded-2xl bg-gradient-to-r from-[#4d0e0e] via-[#751313] to-[#3d0a0a] border border-[#d4af37]/60 shadow-[0_4px_25px_rgba(212,175,55,0.2)] flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+          <div className="flex items-center gap-2.5">
+            <span className="p-1.5 rounded-full bg-[#d4af37] text-black flex-shrink-0 animate-bounce">
+              <Gift className="w-4 h-4 text-black" />
+            </span>
+            <div>
+              <div className="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
+                <span className="text-xs sm:text-sm font-extrabold text-[#f3e5ab] uppercase tracking-wide">
+                  🌸 DURGA PUJA SPECIAL: FLAT 10% OFF
+                </span>
+                <span className="px-2 py-0.5 rounded-full bg-[#d4af37] text-black text-[10px] font-extrabold uppercase shadow">
+                  15 Sep – 15 Oct
+                </span>
+              </div>
+              <p className="text-[11px] sm:text-xs text-[#fceade]/90 font-light mt-0.5">
+                Flat 10% discount on all Facials, Threading, Skin Cleanup & Festive Looks!
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => onBookService(servicesData[0])}
+            className="btn-gold px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider whitespace-nowrap shadow cursor-pointer active:scale-95 flex-shrink-0"
+          >
+            Claim 10% Off
+          </button>
+        </div>
 
         {/* Mobile App-Style Horizontal Category Carousel */}
         <div className="relative mb-6 sm:mb-8">

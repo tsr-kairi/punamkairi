@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Gift } from 'lucide-react';
 import type { ServiceCategory } from '../../data/services';
 
 interface HeroProps {
@@ -77,7 +77,7 @@ const bannerSlides: BannerSlide[] = [
 export const Hero: React.FC<HeroProps> = ({
   onOpenBooking: _onOpenBooking,
   onOpenMenuQuickView: _onOpenMenuQuickView,
-  onOpenOffersModal: _onOpenOffersModal,
+  onOpenOffersModal,
   onNavigateToCategory
 }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -244,6 +244,24 @@ export const Hero: React.FC<HeroProps> = ({
               />
             );
           })}
+        </div>
+
+        {/* Festive Durga Puja Offer Strip in Hero */}
+        <div 
+          onClick={() => onOpenOffersModal && onOpenOffersModal()}
+          className="mt-3.5 sm:mt-5 max-w-2xl mx-auto p-2.5 sm:p-3 rounded-full bg-gradient-to-r from-[#4d0e0e]/95 via-[#7d1414]/95 to-[#4d0e0e]/95 border border-[#d4af37]/60 shadow-[0_0_25px_rgba(212,175,55,0.25)] flex items-center justify-between gap-2 cursor-pointer hover:border-[#d4af37] transition-all group active:scale-98"
+        >
+          <div className="flex items-center gap-2 overflow-hidden pl-1 sm:pl-2">
+            <span className="p-1 rounded-full bg-[#d4af37] text-black flex-shrink-0 animate-bounce">
+              <Gift className="w-3.5 h-3.5 text-black" />
+            </span>
+            <span className="text-[11px] sm:text-xs font-bold text-[#f7e7ce] truncate">
+              🌸 Durga Puja Special: <strong className="text-[#f3e5ab]">Flat 10% OFF</strong> on all Facials, Threading & Cleanup!
+            </span>
+          </div>
+          <span className="px-2.5 py-0.5 rounded-full bg-[#d4af37] text-black text-[10px] font-extrabold uppercase tracking-wider whitespace-nowrap shadow flex-shrink-0">
+            15 Sep – 15 Oct
+          </span>
         </div>
 
       </div>

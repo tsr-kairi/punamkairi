@@ -28,14 +28,14 @@ export const FestiveTopBanner: React.FC<FestiveTopBannerProps> = ({ onOpenOffers
               <Gift className="w-3.5 h-3.5" />
             </span>
             <div className="flex items-center gap-1.5 flex-wrap">
-              <span className="font-bold text-[#f7e7ce] uppercase tracking-wider text-[11px] sm:text-xs">
-                🌸 DURGA PUJA & GRAND OPENING SPECIAL:
+              <span className="font-extrabold text-[#f7e7ce] uppercase tracking-wider text-[11px] sm:text-xs">
+                🌸 DURGA PUJA SPECIAL:
               </span>
-              <span className="text-[#fceade] hidden sm:inline font-light">
-                Exclusive festive discounts + complimentary lash upgrades on bridal & party bookings!
+              <span className="text-[#fceade] font-medium text-[11px] sm:text-xs">
+                FLAT 10% OFF on all Facials, Threading, Cleanup & Festive Services!
               </span>
-              <span className="px-2 py-0.5 rounded-full bg-[#d4af37]/25 text-[#f3e5ab] text-[10px] font-semibold border border-[#d4af37]/40 hidden md:inline-block">
-                Limited Slots
+              <span className="px-2 py-0.5 rounded-full bg-[#d4af37] text-black text-[10px] font-extrabold uppercase tracking-wider shadow">
+                15 Sep – 15 Oct
               </span>
             </div>
           </div>
