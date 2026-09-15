@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Gift } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Gift, MessageCircle } from 'lucide-react';
 import type { ServiceCategory } from '../../data/services';
+import { shareViaWhatsApp } from '../../utils/share';
 
 interface HeroProps {
   onOpenBooking: () => void;
@@ -259,9 +260,22 @@ export const Hero: React.FC<HeroProps> = ({
               🌸 Durga Puja Special: <strong className="text-[#f3e5ab]">Flat 10% OFF</strong> on all Facials, Threading & Cleanup!
             </span>
           </div>
-          <span className="px-2.5 py-0.5 rounded-full bg-[#d4af37] text-black text-[10px] font-extrabold uppercase tracking-wider whitespace-nowrap shadow flex-shrink-0">
-            15 Sep – 15 Oct
-          </span>
+          <div className="flex items-center gap-1.5 flex-shrink-0">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                shareViaWhatsApp();
+              }}
+              className="p-1 sm:px-2.5 sm:py-1 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-[10px] sm:text-xs uppercase flex items-center gap-1 shadow cursor-pointer transition-all active:scale-90"
+              title="Share Durga Puja Offers on WhatsApp"
+            >
+              <MessageCircle className="w-3 h-3 text-white" />
+              <span className="hidden sm:inline">Share</span>
+            </button>
+            <span className="px-2.5 py-0.5 rounded-full bg-[#d4af37] text-black text-[10px] font-extrabold uppercase tracking-wider whitespace-nowrap shadow">
+              15 Sep – 15 Oct
+            </span>
+          </div>
         </div>
 
       </div>

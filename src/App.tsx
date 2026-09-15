@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { BrandReveal } from './components/common/BrandReveal';
 import { Navbar } from './components/layout/Navbar';
@@ -20,6 +20,7 @@ import { ArtistProfileView } from './components/views/ArtistProfileView';
 import { FestiveTopBanner } from './components/offers/FestiveTopBanner';
 import { FestiveFloatingBadge } from './components/offers/FestiveFloatingBadge';
 import { FestiveOffersModal } from './components/offers/FestiveOffersModal';
+import { FestiveHomepageShareBar } from './components/offers/FestiveHomepageShareBar';
 import { LiveActivityTimeline } from './components/common/LiveActivityTimeline';
 import type { ServiceCategory, ServiceItem } from './data/services';
 
@@ -48,6 +49,27 @@ function AppContent() {
       el.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  // Automatically open Durga Puja offers modal if URL has ?offer=puja or hash #puja-offers / #offers
+  useEffect(() => {
+    const handleCheckOfferInUrl = () => {
+      try {
+        const searchParams = new URLSearchParams(window.location.search);
+        const hasOfferParam = searchParams.get('offer') === 'puja' || searchParams.get('puja') === 'true';
+        const hash = window.location.hash.toLowerCase();
+        const hasOfferHash = hash.includes('offer') || hash.includes('puja');
+        if (hasOfferParam || hasOfferHash) {
+          setOffersModalOpen(true);
+        }
+      } catch {
+        // safe fallback
+      }
+    };
+
+    handleCheckOfferInUrl();
+    window.addEventListener('hashchange', handleCheckOfferInUrl);
+    return () => window.removeEventListener('hashchange', handleCheckOfferInUrl);
+  }, []);
 
   return (
     <div className="relative min-h-screen bg-[#0a0a0c] text-[#f5f2ea] w-full max-w-full overflow-x-clip">
@@ -95,6 +117,8 @@ function AppContent() {
         />
         <Route path="/services" element={<Navigate to="/menu" replace />} />
         <Route path="/services-menu" element={<Navigate to="/menu" replace />} />
+        <Route path="/puja-offers" element={<Navigate to="/?offer=puja#puja-offers" replace />} />
+        <Route path="/offers" element={<Navigate to="/?offer=puja#puja-offers" replace />} />
 
         {/* 3. Main Full Landing Page (Route: /) */}
         <Route
@@ -126,6 +150,9 @@ function AppContent() {
                   onOpenOffersModal={() => setOffersModalOpen(true)}
                   onNavigateToCategory={handleNavigateToCategory}
                 />
+
+                {/* Durga Puja Special Festive Share Bar (Direct 1-Click WhatsApp & Social Media Sharing) */}
+                <FestiveHomepageShareBar onOpenOffersModal={() => setOffersModalOpen(true)} />
 
                 {/* Live Real-Time Customer Booking Activity Timeline Feed (Only Real Submissions: Name + Address + Time) */}
                 <LiveActivityTimeline />

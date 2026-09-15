@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Sparkles, Gift, Check, MessageCircle, Clock, ShieldCheck, Tag } from 'lucide-react';
+import { X, Sparkles, Gift, Check, MessageCircle, Clock, ShieldCheck, Tag, Share2, Copy } from 'lucide-react';
 import { durgaPujaFestiveOffers } from '../../data/offers';
 import type { FestiveOffer } from '../../data/offers';
 import { getOfferClaimWhatsAppUrl } from '../../utils/whatsapp';
+import { shareViaWhatsApp, copyPujaOfferLink } from '../../utils/share';
+import { FestiveShareModal } from './FestiveShareModal';
 import confetti from 'canvas-confetti';
 
 interface FestiveOffersModalProps {
@@ -101,6 +103,10 @@ const MaaDurgaRoyalWatermark: React.FC<{ className?: string }> = ({
 );
 
 export const FestiveOffersModal: React.FC<FestiveOffersModalProps> = ({ isOpen, onClose, onClaimOffer }) => {
+  const [shareModalOpen, setShareModalOpen] = useState(false);
+  const [shareOffer, setShareOffer] = useState<FestiveOffer | null>(null);
+  const [headerCopied, setHeaderCopied] = useState(false);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -116,6 +122,14 @@ export const FestiveOffersModal: React.FC<FestiveOffersModalProps> = ({ isOpen, 
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
+
+  const handleCopyHeaderLink = async () => {
+    const success = await copyPujaOfferLink();
+    if (success) {
+      setHeaderCopied(true);
+      setTimeout(() => setHeaderCopied(false), 2200);
+    }
+  };
 
   const handleClaimOffer = (offer: FestiveOffer) => {
     try {
@@ -190,6 +204,52 @@ export const FestiveOffersModal: React.FC<FestiveOffersModalProps> = ({ isOpen, 
             <p className="text-[11px] sm:text-sm text-[#d4af37] font-serif-luxury italic mt-1 max-w-md mx-auto">
               "{durgaPujaFestiveOffers.subheading}"
             </p>
+
+            {/* Header Social Media Share Actions Bar */}
+            <div className="mt-3.5 flex items-center justify-center gap-2 flex-wrap">
+              <button
+                onClick={() => shareViaWhatsApp()}
+                className="py-1.5 px-3.5 rounded-full bg-gradient-to-r from-[#25D366] to-[#1ebe5d] hover:from-[#20bd5a] hover:to-[#17a54f] text-white text-[11px] sm:text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-md active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+                title="Share offers on WhatsApp"
+              >
+                <MessageCircle className="w-3.5 h-3.5 text-white" />
+                <span>Share on WhatsApp</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setShareOffer(null);
+                  setShareModalOpen(true);
+                }}
+                className="py-1.5 px-3.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/20 text-[#f7e7ce] text-[11px] sm:text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap"
+                title="Share to Facebook, Twitter, Instagram"
+              >
+                <Share2 className="w-3.5 h-3.5 text-[#d4af37]" />
+                <span>Share / Social</span>
+              </button>
+
+              <button
+                onClick={handleCopyHeaderLink}
+                className={`py-1.5 px-3 rounded-full text-[11px] sm:text-xs font-semibold flex items-center gap-1.5 border transition-all cursor-pointer whitespace-nowrap ${
+                  headerCopied
+                    ? 'bg-emerald-600/30 border-emerald-500 text-emerald-300'
+                    : 'bg-black/40 border-white/15 text-[#cfccc4] hover:text-[#d4af37] hover:border-[#d4af37]/50'
+                }`}
+                title="Copy link to Puja Offers"
+              >
+                {headerCopied ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5" />
+                    <span>Copy Link</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
 
           {/* Offers Cards Grid: 1 column on mobile for full spacious luxury, 2 columns on tablet/desktop */}
@@ -276,13 +336,28 @@ export const FestiveOffersModal: React.FC<FestiveOffersModalProps> = ({ isOpen, 
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => handleClaimOffer(offer)}
-                    className="w-full btn-gold py-3 px-4 rounded-xl text-xs sm:text-sm font-bold tracking-wider uppercase flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all cursor-pointer whitespace-nowrap"
-                  >
-                    <MessageCircle className="w-4 h-4 text-[#0a0a0c] flex-shrink-0" />
-                    <span>CLAIM DEAL ON WHATSAPP</span>
-                  </button>
+                  <div className="grid grid-cols-[1fr_auto] gap-2">
+                    <button
+                      onClick={() => handleClaimOffer(offer)}
+                      className="btn-gold py-3 px-3 sm:px-4 rounded-xl text-xs sm:text-sm font-bold tracking-wider uppercase flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+                    >
+                      <MessageCircle className="w-4 h-4 text-[#0a0a0c] flex-shrink-0" />
+                      <span>CLAIM DEAL ON WHATSAPP</span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        setShareOffer(offer);
+                        setShareModalOpen(true);
+                      }}
+                      className="px-3 sm:px-3.5 py-3 rounded-xl bg-white/5 hover:bg-[#d4af37]/20 border border-[#d4af37]/40 hover:border-[#d4af37] text-[#f7e7ce] hover:text-[#d4af37] transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md"
+                      title={`Share ${offer.title} on WhatsApp or Social Media`}
+                      aria-label={`Share ${offer.title}`}
+                    >
+                      <Share2 className="w-4 h-4 text-[#d4af37]" />
+                      <span className="text-xs font-semibold hidden sm:inline">Share</span>
+                    </button>
+                  </div>
                 </div>
 
               </div>
@@ -298,6 +373,13 @@ export const FestiveOffersModal: React.FC<FestiveOffersModalProps> = ({ isOpen, 
           </div>
 
         </motion.div>
+
+        {/* Social Media Share Modal */}
+        <FestiveShareModal
+          isOpen={shareModalOpen}
+          onClose={() => setShareModalOpen(false)}
+          offer={shareOffer}
+        />
       </div>
     </AnimatePresence>
   );

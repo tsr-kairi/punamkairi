@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Gift, ArrowRight, X } from 'lucide-react';
+import { Gift, ArrowRight, X, MessageCircle } from 'lucide-react';
 import { durgaPujaFestiveOffers } from '../../data/offers';
+import { shareViaWhatsApp } from '../../utils/share';
 
 interface FestiveTopBannerProps {
   onOpenOffersModal: () => void;
@@ -42,6 +43,18 @@ export const FestiveTopBanner: React.FC<FestiveTopBannerProps> = ({ onOpenOffers
 
           {/* Right Action CTA & Close Button */}
           <div className="flex items-center gap-2 flex-shrink-0">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                shareViaWhatsApp();
+              }}
+              className="px-2.5 py-1 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-[10px] sm:text-[11px] tracking-wider uppercase flex items-center gap-1 shadow-md active:scale-95 transition-all cursor-pointer whitespace-nowrap"
+              title="Share Puja Offers on WhatsApp"
+            >
+              <MessageCircle className="w-3 h-3 text-white" />
+              <span className="hidden xs:inline">SHARE</span>
+            </button>
+
             <button
               onClick={onOpenOffersModal}
               className="px-3 py-1 rounded-full bg-[#d4af37] hover:bg-[#edd269] text-[#0a0a0c] font-bold text-[11px] tracking-wider uppercase flex items-center gap-1 shadow-md active:scale-95 transition-all cursor-pointer whitespace-nowrap"
